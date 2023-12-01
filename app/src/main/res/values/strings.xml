@@ -60,5 +60,10 @@
     <string name="profile_fragment_label">Profile Fragment</string>
     <string name="floating_button">Floating button</string>
     <string name="menu_settings">Settings</string>
+    <string name="content_description">Product\'s image</string>
+    <string name="title">Product name</string>
+    <string name="secondary_text">5 days left</string>
+    <string name="supporting_text">200g x 1</string>
+    <string name="delete_button_string">Delete product button</string>
 
 </resources>
