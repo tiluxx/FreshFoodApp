@@ -65,5 +65,16 @@
     <string name="secondary_text">5 days left</string>
     <string name="supporting_text">200g x 1</string>
     <string name="delete_button_string">Delete product button</string>
+    <string name="default_web_client_id">371029353723-5rfasm3tnf32qirfm5j3p515lt7d1tuc.apps.googleusercontent.com</string>
+    <string name="title_activity_login">Auth</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcome_login_title">Welcome to Fresh Food</string>
 
 </resources>
