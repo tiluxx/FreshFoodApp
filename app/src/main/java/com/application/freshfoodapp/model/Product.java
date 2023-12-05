@@ -1,59 +1,160 @@
 package com.application.freshfoodapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Product {
-    private String name;
-    private LocalDateTime  expiryDate;
-    private int quantity;
-    private int weight;
-    private String unitAmount;
+    @SerializedName("success")
+    private boolean status;
+    @SerializedName("barcode")
+    private String barcode;
+    @SerializedName("title")
+    private String title;
+    @SerializedName("alias")
+    private String shortTitle;
+    @SerializedName("description")
+    private String description;
+    @SerializedName("brand")
+    private String brand;
+    @SerializedName("manufacturer")
+    private String manufacturer;
+    @SerializedName("category")
+    private String category;
+    @SerializedName("categories")
+    private String categories;
+    @SerializedName("images")
+    private List<String> images = null;
+    @SerializedName("metadata")
+    private BarcodeMetadata metadata = null;
+    @SerializedName("metanutrition")
+    private MetaNutrition metaNutrition;
+    private long expiryDate;
 
-    public Product(String name, LocalDateTime expiryDate, int quantity, int weight, String unitAmount) {
-        this.name = name;
-        this.expiryDate = expiryDate;
-        this.quantity = quantity;
-        this.weight = weight;
-        this.unitAmount = unitAmount;
+    private String ownerId;
+    private String productId;
+
+    public Product() {}
+
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public String getName() {
-        return name;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getProductId() {
+        return productId;
     }
 
-    public LocalDateTime  getExpiryDate() {
+    public void setProductId(String productId) {
+        this.productId = ownerId;
+    }
+
+    public long getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(LocalDateTime  expiryDate) {
+    public void setExpiryDate(long expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public boolean isSuccess() {
+        return status;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public int getWeight() {
-        return weight;
+    public String getBarcode() {
+        return barcode;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
-    public String getUnitAmount() {
-        return unitAmount;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUnitAmount(String unitAmount) {
-        this.unitAmount = unitAmount;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getShortTitle() {
+        return shortTitle;
+    }
+
+    public void setShortTitle(String shortTitle) {
+        this.shortTitle = shortTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public BarcodeMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(BarcodeMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public MetaNutrition getMetaNutrition() {
+        return metaNutrition;
+    }
+
+    public void setMetaNutrition(MetaNutrition metaNutrition) {
+        this.metaNutrition = metaNutrition;
     }
 }

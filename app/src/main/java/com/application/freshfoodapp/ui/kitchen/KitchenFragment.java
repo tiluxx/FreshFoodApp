@@ -25,30 +25,30 @@ public class KitchenFragment extends Fragment {
     private FragmentKitchenBinding binding;
 
     private KitchenViewModel mViewModel;
-
-    public static KitchenFragment newInstance() {
-        return new KitchenFragment();
-    }
+    RecyclerView recyclerView;
+    /*KitchenAdapter adapter;*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(KitchenViewModel.class);
         binding = FragmentKitchenBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        KitchenViewModel mViewModel = new ViewModelProvider(this).get(KitchenViewModel.class);
 
+        KitchenAdapter adapter = new KitchenAdapter();
+        mViewModel.getProducts().observe(getViewLifecycleOwner(), adapter::updateProductList);
         RecyclerView recyclerView = binding.productRecyclerviewTransform;
-        ListAdapter<Product, KitchenViewHolder> adapter = new KitchenAdapter();
+        int spanCount = 2;
+        int spacing = 32;
+        boolean includeEdge = true;
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         recyclerView.setAdapter(adapter);
-        mViewModel.getProducts().observe(getViewLifecycleOwner(), adapter::submitList);
-        return root;
+
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(KitchenViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

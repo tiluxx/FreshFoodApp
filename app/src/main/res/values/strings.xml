@@ -76,5 +76,18 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="welcome_login_title">Welcome to Fresh Food</string>
+    <string name="add_product_page_title">New Product</string>
+    <string name="add_to_fridge">Add to fridge</string>
+    <string name="cancel_adding">Cancel</string>
+    <string name="product_title_edit_text">Product title</string>
+    <string name="product_info_title">What is information of product?</string>
+    <string name="product_barcode_edit_text">Barcode</string>
+    <string name="product_brand_edit_text">Brand</string>
+    <string name="product_expiry_date_title">When is this product expiring?</string>
+    <string name="product_category_title">How would you categorize this product?</string>
+    <string name="product_date_picker">Expiry date</string>
+    <string name="content_description_date_start_icon">Calendar icon</string>
+    <string name="product_kitchen_title">In which storage space do you want to add?</string>
+    <string name="set_expiry_date">Set expiry date</string>
 
 </resources>

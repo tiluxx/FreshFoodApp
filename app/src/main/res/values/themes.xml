@@ -35,6 +35,9 @@
     <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
         <item name="cornerSizeBottomLeft">12dp</item>
         <item name="cornerSizeBottomRight">12dp</item>
+    </style>
 
+    <style name="ShapeAppearanceOverlay.App.SmallCard.Media" parent="">
+        <item name="cornerSize">12dp</item>
     </style>
 </resources>

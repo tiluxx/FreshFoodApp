@@ -20,7 +20,7 @@
             android:scaleType="centerCrop"
             app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
-            app:srcCompat="@drawable/food"
+            app:srcCompat="@drawable/food_bowl"
             app:strokeWidth="2dp" />
 
         <LinearLayout
@@ -54,7 +54,8 @@
         <!-- Buttons -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_marginStart="16dp">
 
             <LinearLayout
@@ -81,7 +82,7 @@
             </LinearLayout>
 
             <Button
-                    android:id="@+id/deleteProductBtn"
+                android:id="@+id/deleteProductBtn"
                 style="?attr/materialIconButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
