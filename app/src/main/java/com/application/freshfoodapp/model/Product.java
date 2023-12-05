@@ -51,7 +51,7 @@ public class Product {
     }
 
     public void setProductId(String productId) {
-        this.productId = ownerId;
+        this.productId = productId;
     }
 
     public long getExpiryDate() {

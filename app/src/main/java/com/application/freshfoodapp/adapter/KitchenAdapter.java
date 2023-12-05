@@ -44,7 +44,8 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull KitchenViewHolder holder, int position) {
-        Product curProduct = data.get(position);
+        int curPosition = holder.getAdapterPosition();
+        Product curProduct = data.get(curPosition);
         holder.getProductNameTextView().setText(curProduct.getTitle());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, uuuu");
@@ -57,14 +58,14 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
             @Override
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                Log.i("TAG", curProduct.getProductId());
                 db.collection("products")
                         .document(curProduct.getProductId())
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                notifyItemRemoved(holder.getAdapterPosition());
+                                data.remove(curProduct);
+                                notifyItemRemoved(curPosition);
                                 Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -86,7 +87,7 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
 
     public void updateProductList(List<Product> data) {
         this.data = data;
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, data.size());
     }
 
     private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {

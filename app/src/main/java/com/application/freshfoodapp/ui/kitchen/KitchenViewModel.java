@@ -35,7 +35,6 @@ public class KitchenViewModel extends ViewModel {
                         Product product;
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             product = document.toObject(Product.class);
-                            Log.i("GET_TAG", document.getId());
                             product.setProductId(document.getId());
                             products.add(product);
                             Log.d("RES", document.getId() + " => " + document.getData());

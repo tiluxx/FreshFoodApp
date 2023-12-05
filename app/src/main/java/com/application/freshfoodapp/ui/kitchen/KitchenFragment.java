@@ -26,15 +26,15 @@ public class KitchenFragment extends Fragment {
 
     private KitchenViewModel mViewModel;
     RecyclerView recyclerView;
-    /*KitchenAdapter adapter;*/
+    KitchenAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentKitchenBinding.inflate(inflater, container, false);
-        KitchenViewModel mViewModel = new ViewModelProvider(this).get(KitchenViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(KitchenViewModel.class);
 
-        KitchenAdapter adapter = new KitchenAdapter();
+        adapter = new KitchenAdapter();
         mViewModel.getProducts().observe(getViewLifecycleOwner(), adapter::updateProductList);
         RecyclerView recyclerView = binding.productRecyclerviewTransform;
         int spanCount = 2;
