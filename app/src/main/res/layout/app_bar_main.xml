@@ -31,15 +31,6 @@
         android:background="@android:color/transparent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabGallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:contentDescription="@string/fab_content_description"
-            style="?attr/floatingActionButtonSmallStyle"
-            app:srcCompat="@drawable/ic_photo_gallery" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabScanner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +38,31 @@
             android:layout_margin="@dimen/fab_margin"
             android:contentDescription="@string/fab_content_description"
             style="?attr/floatingActionButtonSmallStyle"
+            android:text="@string/extended_fab_scanner_label"
             app:srcCompat="@drawable/ic_barcode_scanner" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/fab_content_description"
+            style="?attr/floatingActionButtonSmallStyle"
+            android:text="@string/extended_fab_gallery_label"
+            app:srcCompat="@drawable/ic_photo_gallery" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabManualInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/fab_content_description"
+            style="?attr/floatingActionButtonSmallStyle"
+            android:text="@string/extended_fab_manual_label"
+            app:srcCompat="@drawable/ic_playlist" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

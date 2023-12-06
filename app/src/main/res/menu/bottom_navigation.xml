@@ -9,9 +9,9 @@
             android:icon="@drawable/kitchen"
             android:title="@string/menu_kitchen" />
         <item
-            android:id="@+id/nav_shopping"
-            android:icon="@drawable/shopping"
-            android:title="@string/menu_shopping" />
+            android:id="@+id/nav_sharing"
+            android:icon="@drawable/ic_groups_24"
+            android:title="@string/menu_sharing" />
         <item
             android:id="@+id/nav_recipes"
             android:icon="@drawable/recipes"
