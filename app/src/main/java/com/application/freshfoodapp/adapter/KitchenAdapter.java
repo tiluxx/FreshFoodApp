@@ -95,5 +95,3 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
                 .toLocalDate();
     }
 }
-
-

@@ -89,5 +89,6 @@
     <string name="content_description_date_start_icon">Calendar icon</string>
     <string name="product_kitchen_title">In which storage space do you want to add?</string>
     <string name="set_expiry_date">Set expiry date</string>
-
+    <string name="total_time_text">45min</string>
+    <string name="num_ingredient">0 missing ingredient</string>
 </resources>

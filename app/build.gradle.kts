@@ -7,7 +7,7 @@ android {
     signingConfigs {
         create("freshfoodapp_config") {
             storeFile =
-                file("D:\\LTT\\DEVELOPER\\TDTUCourses\\MobileDevelopment\\FinalProject\\Keystore\\freshfoodapp_keystore.jks")
+                file("C:\\Users\\LENOVO-PC\\Desktop\\FreshFoodApp\\freshfoodapp_keystore.jks")
             storePassword = "freshfood.app257@"
             keyPassword = "freshfood.app257@"
             keyAlias = "FreshFoodAppKeystore"
@@ -52,9 +52,11 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
+
     // Add the dependency for the Firebase library
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-base:18.2.0")
     implementation("com.google.android.gms:play-services-tflite-java:16.1.0")
@@ -72,6 +74,12 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    // Material 3 Carousel
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Load image online
+    implementation("com.squareup.picasso:picasso:2.5.2")
 
     // Others
     implementation("androidx.appcompat:appcompat:1.6.1")
