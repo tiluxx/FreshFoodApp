@@ -1,22 +1,34 @@
 package com.application.freshfoodapp.ui.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.application.freshfoodapp.R;
+import com.application.freshfoodapp.MainActivity;
+import com.application.freshfoodapp.databinding.FragmentProfileBinding;
+import com.application.freshfoodapp.ui.auth.AuthActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
+    private FragmentProfileBinding binding;
     private ProfileViewModel mViewModel;
+    private GoogleSignInClient mGoogleSignInClient;
+    ShapeableImageView profileAvatar;
+    Button setReminderBtn, setRestrictionBtn, logoutBtn;
+    TextView displayNameTextView, emailTextView;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -25,14 +37,42 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        profileAvatar = binding.profileAvatar;
+        setReminderBtn = binding.setReminderBtn;
+        setRestrictionBtn = binding.setRestrictionBtn;
+        logoutBtn = binding.logoutBtn;
+        displayNameTextView = binding.displayNameTextView;
+        emailTextView = binding.emailTextView;
+
+        Picasso.get()
+                .load(MainActivity.getCurUser().getPhotoUrl())
+                .resize(60, 60)
+                .centerCrop()
+                .into(profileAvatar);
+        displayNameTextView.setText(MainActivity.getCurUser().getDisplayName());
+        emailTextView.setText(MainActivity.getCurUser().getEmail());
+
+        MaterialAlertDialogBuilder logoutConfirmDialog = new MaterialAlertDialogBuilder(view.getContext())
+                .setTitle("Log out your account?")
+                .setMessage("Are you sure you want to log out?")
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                })
+                .setPositiveButton("Log out", (dialog, which) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(view.getContext(), AuthActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                });
+
+
+        logoutBtn.setOnClickListener(v -> {
+            logoutConfirmDialog.show();
+        });
+    }
 }

@@ -3,9 +3,7 @@ package com.application.freshfoodapp.ui.addingproduct;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,9 +23,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +35,12 @@ public class AddingProductActivity extends AppCompatActivity {
     private Product mProduct;
     private ActivityAddingProductBinding binding;
     private long expiryDatePicked = -1;
+    private String selectedPantry = "";
+    private List<String> categorizes;
+    private List<Integer> checkedChipIds;
+
     Button cancelAddingBtn, confirmAddingBtn, expiryDatePickerBtn;
     ChipGroup chipCategoryGroup, chipKitchenGroup;
-    Chip chip_1, chip_2, chip_3, chip_4, chip_5, chip_kitchen_1, chip_kitchen_2, chip_kitchen_3;
-    EditText expiryDateInput;
     ShapeableImageView productImageView;
     Toolbar toolbar;
     TextInputEditText
@@ -50,8 +49,7 @@ public class AddingProductActivity extends AppCompatActivity {
             barcodeTextInput;
     TextInputLayout
             productTitleTextInputLayout,
-            brandTextInputLayout,
-            barcodeTextInputLayout;
+            brandTextInputLayout;
     UPCBarcodeAPIInterface apiInterface;
     FirebaseFirestore db;
     MaterialDatePicker<Long> datePicker;
@@ -71,14 +69,6 @@ public class AddingProductActivity extends AppCompatActivity {
 
         chipCategoryGroup = binding.contentAddingProduct.viewAddingProduct.chipCategoryGroup;
         chipKitchenGroup = binding.contentAddingProduct.viewAddingProduct.chipKitchenGroup;
-        chip_1 = binding.contentAddingProduct.viewAddingProduct.chip1;
-        chip_2 = binding.contentAddingProduct.viewAddingProduct.chip2;
-        chip_3 = binding.contentAddingProduct.viewAddingProduct.chip3;
-        chip_4 = binding.contentAddingProduct.viewAddingProduct.chip4;
-        chip_5 = binding.contentAddingProduct.viewAddingProduct.chip5;
-        chip_kitchen_1 = binding.contentAddingProduct.viewAddingProduct.chipKitchen1;
-        chip_kitchen_2 = binding.contentAddingProduct.viewAddingProduct.chipKitchen2;
-        chip_kitchen_3 = binding.contentAddingProduct.viewAddingProduct.chipKitchen3;
 
         productImageView = binding.contentAddingProduct.viewAddingProduct.productImageView;
         productTitleTextInput = binding.contentAddingProduct.viewAddingProduct.productTitleTextInput;
@@ -114,7 +104,6 @@ public class AddingProductActivity extends AppCompatActivity {
                         productTitleTextInput.setText(mProduct.getTitle());
                         brandTextInput.setText(mProduct.getBrand());
                         barcodeTextInput.setText(mProduct.getBarcode());
-                        mProduct.setOwnerId(MainActivity.getCurUser().getUid());
                     }
                 }
 
@@ -126,16 +115,32 @@ public class AddingProductActivity extends AppCompatActivity {
             });
         }
 
-        expiryDatePickerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+        toolbar.setNavigationOnClickListener(v -> sendResultActivity(false));
+
+        chipKitchenGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            for (Integer checkedId: checkedIds) {
+                Chip chip = group.findViewById(checkedId);
+                selectedPantry = chip.getText().toString();
             }
         });
+
+        expiryDatePickerBtn.setOnClickListener(v -> datePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
+
         cancelAddingBtn.setOnClickListener(v -> sendResultActivity(false));
 
         confirmAddingBtn.setOnClickListener(v -> {
             if (validateAllInput()) {
+                categorizes = new ArrayList<>();
+                checkedChipIds = chipCategoryGroup.getCheckedChipIds();
+                Chip selectedChip;
+                for (Integer id : checkedChipIds) {
+                    selectedChip = chipCategoryGroup.findViewById(id);
+                    categorizes.add(selectedChip.getText().toString());
+                }
+                mProduct.setProductCategorizes(categorizes);
+                mProduct.setPantry(selectedPantry);
+                mProduct.setKitchenId(MainActivity.getCurKitchenId());
+
                 db.collection("products").add(mProduct);
                 sendResultActivity(true);
             }
@@ -170,6 +175,16 @@ public class AddingProductActivity extends AppCompatActivity {
         if (expiryDatePicked == -1) {
             isAllFullFilled = false;
             Toast.makeText(this, "Please pick an expiry date", Toast.LENGTH_SHORT).show();
+        }
+
+        if (selectedPantry.isEmpty()) {
+            isAllFullFilled = false;
+            Toast.makeText(this, "Please select a storage space", Toast.LENGTH_SHORT).show();
+        }
+
+        if (chipCategoryGroup.getCheckedChipIds().size() < 1) {
+            isAllFullFilled = false;
+            Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show();
         }
 
         return isAllFullFilled;

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -31,19 +32,21 @@ public class Product {
     private BarcodeMetadata metadata = null;
     @SerializedName("metanutrition")
     private MetaNutrition metaNutrition;
-    private long expiryDate;
 
-    private String ownerId;
+    private long expiryDate;
+    private String kitchenId;
     private String productId;
+    private List<String> productCategorizes = null;
+    private String pantry;
 
     public Product() {}
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getKitchenId() {
+        return kitchenId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setKitchenId(String kitchenId) {
+        this.kitchenId = kitchenId;
     }
 
     public String getProductId() {
@@ -51,7 +54,7 @@ public class Product {
     }
 
     public void setProductId(String productId) {
-        this.productId = ownerId;
+        this.productId = productId;
     }
 
     public long getExpiryDate() {
@@ -60,6 +63,22 @@ public class Product {
 
     public void setExpiryDate(long expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public List<String> getProductCategorizes() {
+        return productCategorizes;
+    }
+
+    public void setProductCategorizes(List<String> productCategorizes) {
+        this.productCategorizes = productCategorizes;
+    }
+
+    public String getPantry() {
+        return pantry;
+    }
+
+    public void setPantry(String pantry) {
+        this.pantry = pantry;
     }
 
     public boolean isSuccess() {

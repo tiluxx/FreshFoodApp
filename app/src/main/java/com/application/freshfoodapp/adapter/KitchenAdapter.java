@@ -1,18 +1,12 @@
 package com.application.freshfoodapp.adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.AsyncDifferConfig;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.freshfoodapp.databinding.ProductItemCardBinding;
@@ -22,11 +16,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +36,8 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull KitchenViewHolder holder, int position) {
-        Product curProduct = data.get(position);
+        int curPosition = holder.getAdapterPosition();
+        Product curProduct = data.get(curPosition);
         holder.getProductNameTextView().setText(curProduct.getTitle());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, uuuu");
@@ -57,14 +50,14 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
             @Override
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                Log.i("TAG", curProduct.getProductId());
                 db.collection("products")
                         .document(curProduct.getProductId())
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                notifyItemRemoved(holder.getAdapterPosition());
+                                data.remove(curProduct);
+                                notifyItemRemoved(curPosition);
                                 Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -86,7 +79,7 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
 
     public void updateProductList(List<Product> data) {
         this.data = data;
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, data.size());
     }
 
     private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {

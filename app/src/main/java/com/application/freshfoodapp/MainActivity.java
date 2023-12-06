@@ -6,24 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-
 import com.application.freshfoodapp.ui.auth.AuthActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,37 +24,33 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.application.freshfoodapp.databinding.ActivityMainBinding;
-import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.model.Kitchen;
 import com.application.freshfoodapp.ui.addingproduct.AddingProductActivity;
 import com.application.freshfoodapp.ui.auth.AuthActivity;
 import com.application.freshfoodapp.ui.barcodescanning.BarcodeScannerActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.application.freshfoodapp.ui.sendinginvitation.SendingInvitationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // Global scope
     public static final int RC_SCAN_BARCODE = 9001;
     public static final int RC_ADD_PRODUCT = 2001;
+    public static final int RC_SHARING_KITCHEN = 5002;
     public static final String REQ_BARCODE_STATE = "BARCODE_COMMON_STATE";
+    public static final String REQ_OWNER_ID_STATE = "OWNER_ID_STATE";
 
     // Other scopes
     private AppBarConfiguration appBarConfiguration;
@@ -72,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
     private String barcodeScanned;
 
     private static FirebaseUser curUser;
-    NavController navController;
-
+    private static NavController navController;
+    private static String curKitchenId;
+    private FirebaseFirestore db;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
-
-    FloatingActionButton fabGallery, fabScanner, fab;
+    FloatingActionButton fabScanner, fabGallery, fabManualInput, fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,17 +73,18 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        db = FirebaseFirestore.getInstance();
 
         fab = binding.appBarMain.fab;
-        fabGallery = binding.appBarMain.fabGallery;
         fabScanner = binding.appBarMain.fabScanner;
+        fabGallery = binding.appBarMain.fabGallery;
+        fabManualInput = binding.appBarMain.fabManualInput;
         fabScanner.hide();
         fabGallery.hide();
+        fabManualInput.hide();
 
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                    // Callback is invoked after the user selects a media item or closes the
-                    // photo picker.
                     if (uri != null) {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
                         getBarcodeValueFromImage(uri);
@@ -105,19 +95,31 @@ public class MainActivity extends AppCompatActivity {
 
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         if (curUser != null) {
+            db.collection("kitchens")
+                    .whereEqualTo("ownerId", curUser.getUid())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    curKitchenId = document.getId();
+                                }
+                            } else {
+                                createNewKitchen();
+                            }
+                        } else {
+                            Snackbar.make(fab, "Cannot get your kitchen", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
             // Action bar/Tool bar
             setSupportActionBar(binding.appBarMain.toolbar);
             if (fab != null) {
-                /*binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show());*/
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!isFABOpen){
-                            showFABMenu();
-                        }else{
-                            closeFABMenu();
-                        }
+                fab.setOnClickListener(v -> {
+                    if(!isFABOpen){
+                        showFABMenu();
+                    }else{
+                        closeFABMenu();
                     }
                 });
             }
@@ -137,6 +139,14 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
+            if (fabManualInput != null) {
+                fabManualInput.setOnClickListener(v -> {
+                    startActivityForResult(
+                            new Intent(MainActivity.this, AddingProductActivity.class),
+                            RC_ADD_PRODUCT);
+                });
+            }
+
             // Navigation view
             NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
             assert navHostFragment != null;
@@ -145,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             NavigationView navigationView = binding.navView;
             if (navigationView != null) {
                 appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.nav_kitchen, R.id.nav_shopping, R.id.nav_recipes, R.id.nav_planner, R.id.nav_profile)
+                        R.id.nav_kitchen, R.id.nav_sharing, R.id.nav_recipes, R.id.nav_planner, R.id.nav_profile)
                         .setOpenableLayout(binding.drawerLayout)
                         .build();
                 NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -156,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationView bottomNavigationView = binding.appBarMain.contentMain.bottomNavView;
             if (bottomNavigationView != null) {
                 appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.nav_kitchen, R.id.nav_shopping, R.id.nav_recipes, R.id.nav_planner, R.id.nav_profile)
+                        R.id.nav_kitchen, R.id.nav_sharing, R.id.nav_recipes, R.id.nav_planner, R.id.nav_profile)
                         .build();
                 NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
                 NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -174,9 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     barcodeScanned = data.getStringExtra(BarcodeScannerActivity.RES_BARCODE);
                     retrieveAndAddProductActivity();
-/*
-                Toast.makeText(this, barcodeScanned, Toast.LENGTH_SHORT).show();
-*/
                 } else {
                     Toast.makeText(this, "Cannot retrieve product information", Toast.LENGTH_SHORT).show();
                 }
@@ -192,6 +199,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Cannot retrieve product information", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case RC_SHARING_KITCHEN:
+                if (resultCode == RESULT_OK) {
+                    String receivedEmail = data.getStringExtra(SendingInvitationActivity.RES_SHARING_KITCHEN);
+                    String message = "Sent invitation to " + receivedEmail;
+                    Snackbar.make(fab, message, Snackbar.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Snackbar.make(fab, "Cannot share your kitchen", Snackbar.LENGTH_SHORT)
+                            .show();
+                }
         }
     }
 
@@ -231,20 +248,54 @@ public class MainActivity extends AppCompatActivity {
         isFABOpen=true;
         fabScanner.show();
         fabGallery.show();
-        fabScanner.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
-        fabGallery.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
+        fabManualInput.show();
+
+        fabManualInput.animate().translationY(-getResources().getDimension(R.dimen.standard_80));
+        fabGallery.animate().translationY(-getResources().getDimension(R.dimen.standard_135));
+        fabScanner.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
     }
 
     private void closeFABMenu(){
         isFABOpen=false;
-        fabScanner.animate().translationY(0);
+        fabManualInput.animate().translationY(0);
         fabGallery.animate().translationY(0);
-        fabScanner.hide();
+        fabScanner.animate().translationY(0);
+        fabManualInput.hide();
         fabGallery.hide();
+        fabScanner.hide();
+    }
+
+    private void createNewKitchen() {
+        db.collection("kitchens")
+                .add(new Kitchen(
+                        curUser.getUid(),
+                        curUser.getDisplayName(),
+                        curUser.getPhotoUrl()
+                ))
+                .addOnCompleteListener(addTask -> {
+                    if (addTask.isSuccessful()) {
+                        curKitchenId = addTask.getResult().getId();
+                    } else {
+                        Snackbar.make(fab, "Cannot get your kitchen", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                });
     }
 
     public static FirebaseUser getCurUser() {
         return curUser;
+    }
+
+    public static NavController getNavController() {
+        return navController;
+    }
+
+    public static String getCurKitchenId() {
+        return curKitchenId;
+    }
+
+    public static void setCurKitchenId(String curKitchenId) {
+        MainActivity.curKitchenId = curKitchenId;
     }
 
     @Override
@@ -269,6 +320,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_share_kitchen) {
+            startActivityForResult(
+                    new Intent(MainActivity.this, SendingInvitationActivity.class),
+                    RC_SHARING_KITCHEN);
+            return true;
+        }
+
+        if (id == R.id.action_notification) {
+            navController.navigate(R.id.nav_notification);
+            return true;
+        }
+
         if (id == R.id.action_settings) {
             return true;
         }

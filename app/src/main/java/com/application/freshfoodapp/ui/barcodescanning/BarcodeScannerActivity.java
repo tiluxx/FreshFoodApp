@@ -1,5 +1,14 @@
 package com.application.freshfoodapp.ui.barcodescanning;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.Image;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.Size;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
@@ -11,16 +20,6 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.Image;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.Size;
-
-import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
