@@ -13,7 +13,8 @@
         android:contentDescription="@string/empty_description"
         android:scaleType="centerCrop"
         app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
-        app:srcCompat="@drawable/empty_street_amico" />
+        app:srcCompat="@drawable/empty_street_amico"
+        />
 
     <TextView
         android:id="@+id/emptyViewTitleTextView"

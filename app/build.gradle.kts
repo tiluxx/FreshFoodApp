@@ -78,9 +78,6 @@ dependencies {
     // Material 3 Carousel
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
-    // Load image online
-    implementation("com.squareup.picasso:picasso:2.5.2")
-
     // Others
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("androidx.appcompat:appcompat:1.6.1")

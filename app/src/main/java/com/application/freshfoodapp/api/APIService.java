@@ -1,5 +1,6 @@
-package com.application.freshfoodapp.model;
+package com.application.freshfoodapp.api;
 
+import com.application.freshfoodapp.model.SearchRecipes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
