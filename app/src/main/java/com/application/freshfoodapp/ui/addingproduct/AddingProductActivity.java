@@ -17,6 +17,8 @@ import com.application.freshfoodapp.databinding.ActivityAddingProductBinding;
 import com.application.freshfoodapp.model.Product;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -76,10 +78,14 @@ public class AddingProductActivity extends AppCompatActivity {
         barcodeTextInput = binding.contentAddingProduct.viewAddingProduct.barcodeTextInput;
 
         expiryDatePickerBtn = binding.contentAddingProduct.viewAddingProduct.expiryDatePickerBtn;
+        CalendarConstraints.Builder constraintsBuilder =
+                new CalendarConstraints.Builder()
+                        .setValidator(DateValidatorPointForward.now());
         datePicker =
                 MaterialDatePicker.Builder.datePicker()
                         .setTitleText("Set expiry date")
                         .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                        .setCalendarConstraints(constraintsBuilder.build())
                         .build();
 
         datePicker.addOnPositiveButtonClickListener(selection -> {

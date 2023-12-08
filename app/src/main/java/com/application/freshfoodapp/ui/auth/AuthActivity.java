@@ -44,6 +44,7 @@ public class AuthActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.revokeAccess();
         mAuth = FirebaseAuth.getInstance();
 
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
