@@ -10,13 +10,14 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class NotificationViewHolder extends RecyclerView.ViewHolder {
     private ShapeableImageView senderAvatarView;
-    private TextView senderNameTextView;
+    private TextView senderNameTextView, messageTextView;
     private Button acceptBtn, declineBtn;
 
     public NotificationViewHolder(NotificationItemBinding binding) {
         super(binding.getRoot());
         senderAvatarView = binding.senderAvatarView;
         senderNameTextView = binding.senderNameTextView;
+        messageTextView = binding.messageTextView;
         acceptBtn = binding.acceptBtn;
         declineBtn = binding.declineBtn;
     }
@@ -27,6 +28,10 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getSenderNameTextView() {
         return senderNameTextView;
+    }
+
+    public TextView getMessageTextView() {
+        return messageTextView;
     }
 
     public Button getAcceptBtn() {

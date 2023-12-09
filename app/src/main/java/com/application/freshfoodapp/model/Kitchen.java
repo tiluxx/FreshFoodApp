@@ -12,22 +12,24 @@ public class Kitchen {
     @SerializedName("ownerDisplayName")
     private String ownerDisplayName;
     @SerializedName("ownerPhotoUrl")
-    private Uri ownerPhotoUrl;
+    private String ownerPhotoUrl;
     @SerializedName("subOwnerIds")
     private List<String> subOwnerIds;
     private String kitchenId;
+
+    public Kitchen() {}
 
     public Kitchen(String ownerId) {
         this.ownerId = ownerId;
     }
 
-    public Kitchen(String ownerId, String ownerDisplayName, Uri ownerPhotoUrl) {
+    public Kitchen(String ownerId, String ownerDisplayName, String ownerPhotoUrl) {
         this.ownerId = ownerId;
         this.ownerDisplayName = ownerDisplayName;
         this.ownerPhotoUrl = ownerPhotoUrl;
     }
 
-    public Kitchen(String ownerId, String ownerDisplayName, Uri ownerPhotoUrl, List<String> subOwnerIds) {
+    public Kitchen(String ownerId, String ownerDisplayName, String ownerPhotoUrl, List<String> subOwnerIds) {
         this.ownerId = ownerId;
         this.ownerDisplayName = ownerDisplayName;
         this.ownerPhotoUrl = ownerPhotoUrl;
@@ -50,11 +52,11 @@ public class Kitchen {
         this.ownerDisplayName = ownerDisplayName;
     }
 
-    public Uri getOwnerPhotoUrl() {
+    public String getOwnerPhotoUrl() {
         return ownerPhotoUrl;
     }
 
-    public void setOwnerPhotoUrl(Uri ownerPhotoUrl) {
+    public void setOwnerPhotoUrl(String ownerPhotoUrl) {
         this.ownerPhotoUrl = ownerPhotoUrl;
     }
 

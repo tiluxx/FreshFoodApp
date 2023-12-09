@@ -25,8 +25,8 @@ public class SharingViewModel extends ViewModel {
         db = FirebaseFirestore.getInstance();
         List<Kitchen> kitchens = new ArrayList<>();
 
-        db.collection("invitations")
-                .whereEqualTo("receiverId", MainActivity.getCurUser().getUid())
+        db.collection("kitchens")
+                .whereArrayContains("subOwnerIds", MainActivity.getCurUser().getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

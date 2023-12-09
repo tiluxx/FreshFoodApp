@@ -14,33 +14,26 @@ public class Invitation {
     @SerializedName("ownerEmail")
     private String ownerEmail;
     @SerializedName("ownerPhotoUrl")
-    private Uri ownerPhotoUrl;
+    private String ownerPhotoUrl;
     @SerializedName("receiverId")
     private String receiverId;
-    @SerializedName("sharingPantries")
+    @SerializedName("sharingKitchenId")
     private String sharingKitchenId;
     @SerializedName("message")
     private String message;
 
     private String invitationId;
 
-    public Invitation(String ownerId, String ownerDisplayName, String ownerEmail, Uri ownerPhotoUrl, String receiverId, String sharingKitchenId) {
-        this.ownerId = ownerId;
-        this.ownerDisplayName = ownerDisplayName;
-        this.ownerEmail = ownerEmail;
-        this.ownerPhotoUrl = ownerPhotoUrl;
-        this.receiverId = receiverId;
-        this.sharingKitchenId = sharingKitchenId;
-    }
+    public Invitation() {}
 
-    public Invitation(String ownerId, String ownerDisplayName, String ownerEmail, Uri ownerPhotoUrl, String receiverId, String sharingKitchenId, String message) {
+    public Invitation(String ownerId, String ownerDisplayName, String ownerEmail, String ownerPhotoUrl, String receiverId, String sharingKitchenId) {
         this.ownerId = ownerId;
         this.ownerDisplayName = ownerDisplayName;
         this.ownerEmail = ownerEmail;
         this.ownerPhotoUrl = ownerPhotoUrl;
         this.receiverId = receiverId;
         this.sharingKitchenId = sharingKitchenId;
-        this.message = message;
+        this.message = "Cook with me with my kitchen";
     }
 
     public String getOwnerId() {
@@ -67,11 +60,11 @@ public class Invitation {
         this.ownerEmail = ownerEmail;
     }
 
-    public Uri getOwnerPhotoUrl() {
+    public String getOwnerPhotoUrl() {
         return ownerPhotoUrl;
     }
 
-    public void setOwnerPhotoUrl(Uri ownerPhotoUrl) {
+    public void setOwnerPhotoUrl(String ownerPhotoUrl) {
         this.ownerPhotoUrl = ownerPhotoUrl;
     }
 

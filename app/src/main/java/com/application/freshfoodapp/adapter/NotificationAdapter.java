@@ -1,6 +1,7 @@
 package com.application.freshfoodapp.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -8,11 +9,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.databinding.NotificationItemBinding;
 import com.application.freshfoodapp.model.Invitation;
 import com.application.freshfoodapp.viewholder.NotificationViewHolder;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +34,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationViewHo
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         Invitation invitation = data.get(position);
 
-        holder.getSenderAvatarView().setImageURI(invitation.getOwnerPhotoUrl());
+        Picasso.get()
+                .load(invitation.getOwnerPhotoUrl())
+                .resize(60, 60)
+                .centerCrop()
+                .into(holder.getSenderAvatarView());
         holder.getSenderNameTextView().setText(invitation.getOwnerDisplayName());
+        holder.getMessageTextView().setText(invitation.getMessage());
 
         holder.getAcceptBtn().setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.freshfoodapp.adapter.SharingAdapter;
@@ -43,6 +44,7 @@ public class SharingFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), adapter::updateSharingKitchenList);
 
         RecyclerView recyclerView = binding.sharingRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
     }
 

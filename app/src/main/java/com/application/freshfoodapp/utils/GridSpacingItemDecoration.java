@@ -1,4 +1,4 @@
-package com.application.freshfoodapp.ui.kitchen;
+package com.application.freshfoodapp.utils;
 
 import android.graphics.Rect;
 import android.view.View;

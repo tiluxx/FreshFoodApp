@@ -1,4 +1,4 @@
-package com.application.freshfoodapp.ui.kitchen.kitchentype;
+package com.application.freshfoodapp.ui.sharing.SharedKitchen.kitchentype;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,22 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.adapter.KitchenTypeAdapter;
-import com.application.freshfoodapp.databinding.FragmentKitchenTypeBinding;
+import com.application.freshfoodapp.databinding.FragmentTabSharedKitchenTypeBinding;
+import com.application.freshfoodapp.ui.sharing.SharedKitchen.SharedKitchenFragment;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.google.android.material.tabs.TabLayout;
 
-public class TabKitchenTypeFragment extends Fragment {
+public class TabSharedKitchenTypeFragment extends Fragment {
 
     public static final String ARG_OBJECT = "object";
-    private FragmentKitchenTypeBinding binding;
-    private TabKitchenTypeViewModel mViewModel;
+    public static final String ARG_SHARED_KITCHEN_ID = "shared_kitchen_id";
+    private FragmentTabSharedKitchenTypeBinding binding;
+    private TabSharedKitchenTypeViewModel mViewModel;
 
     KitchenTypeAdapter adapter;
     TabLayout tabLayout;
     Bundle args;
 
-    public static TabKitchenTypeFragment newInstance() {
-        return new TabKitchenTypeFragment();
+    public static TabSharedKitchenTypeFragment newInstance() {
+        return new TabSharedKitchenTypeFragment();
     }
 
     @Override
@@ -39,11 +41,11 @@ public class TabKitchenTypeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentKitchenTypeBinding.inflate(inflater, container, false);
-        mViewModel = new ViewModelProvider(this).get(TabKitchenTypeViewModel.class);
+        binding = FragmentTabSharedKitchenTypeBinding.inflate(inflater, container, false);
+        mViewModel = new ViewModelProvider(this).get(TabSharedKitchenTypeViewModel.class);
         args = getArguments();
         mViewModel
-                .fetchProductsByKitchenType(args.getString(ARG_OBJECT), MainActivity.getCurKitchenId());
+                .fetchProductsByKitchenType(args.getString(ARG_OBJECT), args.getString(ARG_SHARED_KITCHEN_ID));
         return binding.getRoot();
     }
 

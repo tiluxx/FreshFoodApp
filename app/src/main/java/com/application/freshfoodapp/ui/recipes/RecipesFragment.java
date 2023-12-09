@@ -20,7 +20,7 @@ import com.application.freshfoodapp.api.APIService;
 import com.application.freshfoodapp.model.Product;
 import com.application.freshfoodapp.model.RootObjectModel;
 import com.application.freshfoodapp.model.SearchRecipes;
-import com.application.freshfoodapp.ui.kitchen.GridSpacingItemDecoration;
+import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 

@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(new Kitchen(
                         curUser.getUid(),
                         curUser.getDisplayName(),
-                        curUser.getPhotoUrl()
+                        curUser.getPhotoUrl().getPath()
                 ))
                 .addOnCompleteListener(addTask -> {
                     if (addTask.isSuccessful()) {

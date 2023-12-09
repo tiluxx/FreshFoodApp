@@ -6,22 +6,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.application.freshfoodapp.ui.kitchen.KitchenFragment;
 import com.application.freshfoodapp.ui.kitchen.kitchentype.TabKitchenTypeFragment;
+import com.application.freshfoodapp.ui.sharing.SharedKitchen.kitchentype.TabSharedKitchenTypeFragment;
 
-public class KitchenPagerAdapter extends FragmentStateAdapter {
+public class SharedKitchenPagerAdapter extends FragmentStateAdapter {
+    private String sharedKitchenId;
     public static final String[] kitchenTypes = {"Fridge", "Pantry", "Freezer"};
 
-    public KitchenPagerAdapter(@NonNull Fragment fragment) {
+    public SharedKitchenPagerAdapter(@NonNull Fragment fragment, String sharedKitchenId) {
         super(fragment);
+        this.sharedKitchenId = sharedKitchenId;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new TabKitchenTypeFragment();
+        Fragment fragment = new TabSharedKitchenTypeFragment();
         Bundle args = new Bundle();
-        args.putString(TabKitchenTypeFragment.ARG_OBJECT, kitchenTypes[position]);
+        args.putString(TabSharedKitchenTypeFragment.ARG_OBJECT, kitchenTypes[position]);
+        args.putString(TabSharedKitchenTypeFragment.ARG_SHARED_KITCHEN_ID, sharedKitchenId);
         fragment.setArguments(args);
         return fragment;
     }

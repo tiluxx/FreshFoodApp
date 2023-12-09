@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class KitchenFridgeAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
+public class KitchenTypeAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
     private List<Product> data = new ArrayList<>();
 
     @NonNull

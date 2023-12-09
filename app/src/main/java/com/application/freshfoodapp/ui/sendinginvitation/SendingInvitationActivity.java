@@ -53,7 +53,7 @@ public class SendingInvitationActivity extends AppCompatActivity {
                                 sender.getUid(),
                                 sender.getDisplayName(),
                                 sender.getEmail(),
-                                sender.getPhotoUrl(),
+                                sender.getPhotoUrl().getPath(),
                                 sharingInfoTextInput.getText().toString(),
                                 MainActivity.getCurKitchenId());
                 db.collection("invitations").add(sharingInvitation);

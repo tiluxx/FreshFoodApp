@@ -68,5 +68,10 @@
         android:name="com.application.freshfoodapp.ui.notification.NotificationFragment"
         android:label="@string/notiftication_fragment_label"
         tools:layout="@layout/fragment_notification"/>
+    <fragment
+        android:id="@+id/nav_shared_kitchen"
+        android:name="com.application.freshfoodapp.ui.sharing.SharedKitchen.SharedKitchenFragment"
+        android:label="@string/shared_kitchen_fragment_label"
+        tools:layout="@layout/fragment_shared_kitchen"/>
 
 </navigation>

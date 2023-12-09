@@ -12,34 +12,39 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/senderAvatarView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:contentDescription="@string/content_description"
             android:scaleType="centerCrop"
             app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
-            app:srcCompat="@drawable/food_bowl"
-            app:strokeWidth="2dp" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Avatar"
+            app:srcCompat="@drawable/food_bowl" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/senderNameTextView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="@string/sender_name"
-                android:textAppearance="?attr/textAppearanceTitleLarge" />
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/messageTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/invitation_message"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <Button
