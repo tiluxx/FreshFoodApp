@@ -3,20 +3,19 @@ package com.application.freshfoodapp.viewholder;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.freshfoodapp.databinding.RecipesItemCardBinding;
-import com.google.android.material.appbar.MaterialToolbar;
+import com.application.freshfoodapp.databinding.RecipesItemVerticalCardBinding;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.carousel.MaskableFrameLayout;
-import com.google.android.material.imageview.ShapeableImageView;
 
-public class RecipesViewHolder extends RecyclerView.ViewHolder {
+public class RecipesVerticalViewHolder extends RecyclerView.ViewHolder {
     private ImageView recipesImage;
     private TextView dishName, calories, totalTime;
-    private MaskableFrameLayout itemView;
+    private MaterialCardView itemView;
 
-    public RecipesViewHolder(RecipesItemCardBinding binding) {
+    public RecipesVerticalViewHolder(RecipesItemVerticalCardBinding binding) {
         super(binding.getRoot());
         recipesImage = binding.dishImageView;
         dishName = binding.dishNameTextView;
@@ -25,11 +24,11 @@ public class RecipesViewHolder extends RecyclerView.ViewHolder {
         itemView = binding.card;
     }
 
-    public MaskableFrameLayout getItemView() {
+    public MaterialCardView getItemView() {
         return itemView;
     }
 
-    public void setItemView(MaskableFrameLayout itemView) {
+    public void setItemView(MaterialCardView itemView) {
         this.itemView = itemView;
     }
 

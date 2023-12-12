@@ -3,6 +3,7 @@ package com.application.freshfoodapp.model;
 import com.google.gson.annotations.Expose;
 
 public class RecipeModel {
+    private String uri;
     private String label;
     private String image;
     private String calories;
@@ -13,10 +14,13 @@ public class RecipeModel {
     private String mealType[];
     @Expose()
     private String dishType[];
+    @Expose
+    private String healthLabels[];
     @Expose()
     private Ingredient ingredients[];
 
-    public RecipeModel(String label, String image, String calories, String totalTime, String[] cuisineType, String[] mealType, String[] dishType, Ingredient[] ingredients) {
+    public RecipeModel(String uri, String label, String image, String calories, String totalTime, String[] cuisineType, String[] mealType, String[] dishType, String[] healthLabels, Ingredient[] ingredients) {
+        this.uri = uri;
         this.label = label;
         this.image = image;
         this.calories = calories;
@@ -24,6 +28,31 @@ public class RecipeModel {
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.dishType = dishType;
+        this.healthLabels = healthLabels;
+        this.ingredients = ingredients;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String[] getHealthLabels() {
+        return healthLabels;
+    }
+
+    public void setHealthLabels(String[] healthLabels) {
+        this.healthLabels = healthLabels;
+    }
+
+    public Ingredient[] getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Ingredient[] ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -81,13 +110,5 @@ public class RecipeModel {
 
     public void setDishType(String[] dishType) {
         this.dishType = dishType;
-    }
-
-    public Ingredient[] getIngredient() {
-        return ingredients;
-    }
-
-    public void setIngredient(Ingredient[] ingredient) {
-        this.ingredients = ingredient;
     }
 }

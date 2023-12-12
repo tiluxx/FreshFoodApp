@@ -7,38 +7,38 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
-import com.application.freshfoodapp.databinding.RecipesItemCardBinding;
+import com.application.freshfoodapp.databinding.RecipesItemVerticalCardBinding;
 import com.application.freshfoodapp.model.RootObjectModel;
 import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
-import com.application.freshfoodapp.viewholder.RecipesViewHolder;
+import com.application.freshfoodapp.viewholder.RecipesVerticalViewHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
+public class RecipesVerticalAdapter extends RecyclerView.Adapter<RecipesVerticalViewHolder> {
     private List<RootObjectModel> data;
     @NonNull
     @Override
-    public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecipesItemCardBinding binding = RecipesItemCardBinding.inflate(LayoutInflater.from(parent.getContext()));
-        return new RecipesViewHolder(binding);
+    public RecipesVerticalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecipesItemVerticalCardBinding binding = RecipesItemVerticalCardBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new RecipesVerticalViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecipesVerticalViewHolder holder, int position) {
         RootObjectModel recipes = data.get(position);
 
-        if(recipes.getRecipeModel().getLabel().length() > 17) {
-            holder.getDishName().setText(recipes.getRecipeModel().getLabel().substring(0, 18) + "...");
+        if(recipes.getRecipeModel().getLabel().length() > 19) {
+            holder.getDishName().setText(recipes.getRecipeModel().getLabel().substring(0, 20) + "...");
         } else {
             holder.getDishName().setText(recipes.getRecipeModel().getLabel());
         }
 
         Glide.with(holder.getRecipesImage().getContext()).load(recipes.getRecipeModel()
                         .getImage())
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.getRecipesImage());
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.getRecipesImage());
 
         if (Float.valueOf(recipes.getRecipeModel().getTotalTime()) <= 0) {
             holder.getTotalTime().setText("15min");

@@ -20,11 +20,20 @@ public interface APIService {
             .build()
             .create(APIService.class);
 
-    @GET("search")
+    @GET("api/recipes/v2")
     Call<SearchRecipes> searchRecipes (@Query("app_id") String app_id,
                                        @Query("app_key") String app_key,
+                                       @Query("type") String type,
                                        @Query("q") String q);
-    @GET("search")
-    Call<SearchRecipes> loadDish(@Query("app_id") String app_id,
-                                 @Query("app_key") String app_key);
+    @GET("api/recipes/v2/by-uri")
+    Call<SearchRecipes> loadDish (@Query("app_id") String app_id,
+                                  @Query("app_key") String app_key,
+                                  @Query("type") String type,
+                                  @Query("uri") String uri);
+
+    @GET("api/recipes/v2")
+    Call<SearchRecipes> loadDishBaseOnCountry (@Query("app_id") String app_id,
+                                               @Query("app_key") String app_key,
+                                               @Query("type") String type,
+                                               @Query("cuisineType") String cuisineType);
 }
