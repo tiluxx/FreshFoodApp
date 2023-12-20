@@ -1,5 +1,6 @@
 package com.application.freshfoodapp.ui.recipes.recipescountry;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,12 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.adapter.RecipesVerticalAdapter;
 import com.application.freshfoodapp.databinding.FragmentCountryBinding;
 import com.application.freshfoodapp.model.Ingredient;
 import com.application.freshfoodapp.model.RootObjectModel;
+<<<<<<< Updated upstream
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
+=======
+>>>>>>> Stashed changes
 import com.application.freshfoodapp.ui.recipes.RecipesFragment;
+import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 

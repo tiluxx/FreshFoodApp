@@ -1,11 +1,22 @@
 package com.application.freshfoodapp;
 
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,10 +24,18 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.remindbroadcast.ReminderBroadcast;
 import com.application.freshfoodapp.ui.auth.AuthActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -43,6 +62,10 @@ import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // Global scope
@@ -51,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int RC_SHARING_KITCHEN = 5002;
     public static final String REQ_BARCODE_STATE = "BARCODE_COMMON_STATE";
     public static final String REQ_OWNER_ID_STATE = "OWNER_ID_STATE";
+    private static final String CHANNEL_ID_NOTIFICATION = "food_expiry_channel";
 
     // Other scopes
     private AppBarConfiguration appBarConfiguration;
@@ -112,13 +136,16 @@ public class MainActivity extends AppCompatActivity {
                                     .show();
                         }
                     });
+
+            // Notification food expiry date
+            getExpiryDate();
             // Action bar/Tool bar
             setSupportActionBar(binding.appBarMain.toolbar);
             if (fab != null) {
                 fab.setOnClickListener(v -> {
-                    if(!isFABOpen){
+                    if (!isFABOpen) {
                         showFABMenu();
-                    }else{
+                    } else {
                         closeFABMenu();
                     }
                 });
@@ -210,6 +237,103 @@ public class MainActivity extends AppCompatActivity {
                             .show();
                 }
         }
+    }
+
+    private void getExpiryDate() {
+        // 3 days left to expire
+        Date rateDate = new Date(System.currentTimeMillis() + 3 * 25 * 60 * 60 * 1000);
+        Date currentDate = new Date(System.currentTimeMillis());
+        List<Product> products = new ArrayList<>();
+        db.collection("products")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Product product;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            product = document.toObject(Product.class);
+                            product.setProductId(document.getId());
+                            Date expiryDate = new Date(product.getExpiryDate());
+                            // 1 hour left to expire
+                            Date reminderDate = new Date(expiryDate.getTime() - (1 * 60 * 60 * 1000));
+                            if(reminderDate.after(currentDate) && reminderDate.before(rateDate)) {
+                                products.add(product);
+                            }
+                        }
+                        showNotification(products);
+                    } else {
+                        Snackbar.make(fab, "Cannot get your products", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+    }
+
+    private void setNotifyOffline() {
+        Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
+        long timeTrigger = System.currentTimeMillis() + 10 * 1000;
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timeTrigger, pendingIntent);
+    }
+
+    private void showNotification(List<Product> products) {
+        if(!products.isEmpty()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if(ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.POST_NOTIFICATIONS) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[] {Manifest.permission.POST_NOTIFICATIONS}, 101);
+                }
+
+                NotificationChannel channel_off = new NotificationChannel(ReminderBroadcast.CHANNEL_ID_OFF_NOTIFICATION, "Expiry date reminder", NotificationManager.IMPORTANCE_HIGH);
+                channel_off.setDescription("Reminders for food expiry dates");
+
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID_NOTIFICATION, "Expiry date reminder", NotificationManager.IMPORTANCE_HIGH);
+                channel.setDescription("Reminders for food expiry dates");
+                channel.enableLights(true);
+                channel.setLightColor(Color.RED);
+                channel.enableVibration(true);
+
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+                notificationManager.createNotificationChannel(channel_off);
+            }
+
+            // Builder for notification offline
+            setNotifyOffline();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_NOTIFICATION)
+                    .setSmallIcon(R.drawable.ic_notifications_24)
+                    .setContentTitle("Food Expiry Reminder")
+                    .setContentText("Check the expiration dates of foods")
+                    .setStyle(addProducts(products).setBigContentTitle("Don't forget to check the expiry date"))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(1, builder.build());
+        }
+    }
+
+    public static NotificationCompat.InboxStyle addProducts(List<Product> productList) {
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        for (Product product : productList) {
+            if(product.getTitle() != null) {
+                if(product.getTitle().length() > 27) {
+                    inboxStyle
+                            .addLine(product.getTitle().substring(0, 27) + ".. on " + formatDate(new Date(product.getExpiryDate())));
+                } else {
+                    inboxStyle
+                            .addLine(product.getTitle() + " on " + formatDate(new Date(product.getExpiryDate())));
+                }
+            }
+        }
+        return inboxStyle;
+    }
+
+    public static String formatDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return dateFormat.format(date);
     }
 
     private void getBarcodeValueFromImage(Uri barcodeImageUri) {

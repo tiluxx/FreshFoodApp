@@ -10,7 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +56,8 @@ public class RecipesViewModel extends ViewModel {
                     }
 
                     // Call api recipes from some ingredients in ProductCategorizes
-                    query = query.substring(0, query.length()-1);
+                    query = deleteDuplicates(query.substring(0, query.length()-1));
+
                     APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", query).enqueue(new Callback<SearchRecipes>() {
                         @Override
                         public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
@@ -67,5 +71,44 @@ public class RecipesViewModel extends ViewModel {
 
                 }
             });
+    }
+    private String deleteDuplicates(String inputString) {
+        Random rand = new Random();
+        String[] values = inputString.split(",");
+        randomizeArray(values);
+
+        String[] valuesDeclineNumberIngredients = new String[3];
+        for (int i = 0; i < valuesDeclineNumberIngredients.length; i++) {
+            int index = rand.nextInt(values.length - 1);
+            valuesDeclineNumberIngredients[i] = values[index];
+        }
+
+        HashSet<String> seen = new HashSet<>();
+        StringBuilder result = new StringBuilder();
+
+        for (String value : valuesDeclineNumberIngredients) {
+            if (!seen.contains(value)) {
+                seen.add(value);
+                if (result.length() > 0) {
+                    result.append(",");
+                }
+                result.append(value);
+            }
+        }
+
+        return result.toString();
+    }
+
+    private void randomizeArray(String[] array) {
+        Random rand = new Random();
+
+        for (int i = array.length - 1; i > 0; i--) {
+            int index = rand.nextInt(i + 1);
+
+            // Swap elements at i and index
+            String temp = array[i];
+            array[i] = array[index];
+            array[index] = temp;
+        }
     }
 }

@@ -68,22 +68,31 @@
         android:name="com.application.freshfoodapp.ui.notification.NotificationFragment"
         android:label="@string/notiftication_fragment_label"
         tools:layout="@layout/fragment_notification"/>
+
     <fragment
         android:id="@+id/nav_shared_kitchen"
         android:name="com.application.freshfoodapp.ui.sharing.SharedKitchen.SharedKitchenFragment"
         android:label="@string/shared_kitchen_fragment_label"
         tools:layout="@layout/fragment_shared_kitchen"/>
 
+<<<<<<< Updated upstream
     <fragment
         android:id="@+id/nav_ingredient"
         android:name="com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment"
         android:label="@string/ingredient_fragment_label"
         tools:layout="@layout/fragment_ingredient" />
 
+=======
+>>>>>>> Stashed changes
     <fragment
         android:id="@+id/nav_country"
         android:name="com.application.freshfoodapp.ui.recipes.recipescountry.CountryFragment"
-        android:label="Traditional Asian meal"
+        android:label="Traditional meal"
         tools:layout="@layout/fragment_country" />
 
+    <fragment
+        android:id="@+id/nav_ingredient"
+        android:name="com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment"
+        android:label="Food ingredients"
+        tools:layout="@layout/fragment_ingredient" />
 </navigation>

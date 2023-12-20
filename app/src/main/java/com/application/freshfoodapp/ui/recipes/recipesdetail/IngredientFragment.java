@@ -86,7 +86,7 @@ public class IngredientFragment extends Fragment {
     }
 
     private void prepareData() {
-        TextView dishName, calories, totalTime;
+        TextView dishName, calories, totalTime, cuisine, meal, dish;
         ChipGroup chipGroup;
         ImageView dishImage;
 
@@ -94,7 +94,27 @@ public class IngredientFragment extends Fragment {
         calories = binding.caloriesTextView;
         totalTime = binding.totalTimeTextView;
         dishImage = binding.dishImageView2;
+        cuisine = binding.cuisineTextView2;
+        meal = binding.mealTextView2;
+        dish = binding.dishTextView2;
         chipGroup = binding.chipCategoryGroup;
+
+        String cuisineType = "", mealType = "", dishType = "";
+        for(String item: recipe.get(0).getRecipeModel().getCuisineType()) {
+            cuisineType += item + ", ";
+        }
+
+        for(String item: recipe.get(0).getRecipeModel().getMealType()) {
+            mealType += item + ", ";
+        }
+
+        for(String item: recipe.get(0).getRecipeModel().getDishType()) {
+            dishType += item + ", ";
+        }
+
+        cuisine.setText(cuisineType.substring(0, cuisineType.length()-2));
+        meal.setText(mealType.substring(0, mealType.length()-2));
+        dish.setText(dishType.substring(0, dishType.length()-2));
 
         List<String> chips = new ArrayList<>(Arrays.asList(recipe.get(0).getRecipeModel().getHealthLabels()));
         Context context = chipGroup.getContext();

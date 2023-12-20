@@ -7,7 +7,7 @@ android {
     signingConfigs {
         create("freshfoodapp_config") {
             storeFile =
-                file("D:\\LTT\\DEVELOPER\\TDTUCourses\\MobileDevelopment\\FinalProject\\Keystore\\freshfoodapp_keystore.jks")
+                file("C:\\Users\\LENOVO-PC\\Desktop\\FreshFoodApp\\freshfoodapp_keystore.jks")
             storePassword = "freshfood.app257@"
             keyPassword = "freshfood.app257@"
             keyAlias = "FreshFoodAppKeystore"
