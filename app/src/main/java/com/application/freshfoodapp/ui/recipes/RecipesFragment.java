@@ -16,16 +16,14 @@ import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.adapter.RecipesAdapter;
 import com.application.freshfoodapp.databinding.FragmentRecipesBinding;
 import com.application.freshfoodapp.model.RootObjectModel;
-<<<<<<< Updated upstream
+
 import com.application.freshfoodapp.model.SearchRecipes;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-=======
-import com.application.freshfoodapp.ui.kitchen.GridSpacingItemDecoration;
 import com.google.android.material.imageview.ShapeableImageView;
->>>>>>> Stashed changes
+
 import java.util.ArrayList;
 import java.util.List;
 

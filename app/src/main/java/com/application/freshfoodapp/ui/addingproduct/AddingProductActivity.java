@@ -76,23 +76,7 @@ public class AddingProductActivity extends AppCompatActivity {
         productTitleTextInput = binding.contentAddingProduct.viewAddingProduct.productTitleTextInput;
         brandTextInput = binding.contentAddingProduct.viewAddingProduct.brandTextInput;
         barcodeTextInput = binding.contentAddingProduct.viewAddingProduct.barcodeTextInput;
-
         expiryDatePickerBtn = binding.contentAddingProduct.viewAddingProduct.expiryDatePickerBtn;
-        CalendarConstraints.Builder constraintsBuilder =
-                new CalendarConstraints.Builder()
-                        .setValidator(DateValidatorPointForward.now());
-        datePicker =
-                MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Set expiry date")
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                        .setCalendarConstraints(constraintsBuilder.build())
-                        .build();
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            expiryDatePicked = selection;
-            mProduct.setExpiryDate(selection);
-            expiryDatePickerBtn.setText(datePicker.getHeaderText());
-        });
 
         Intent intent = getIntent();
         String retrievedBarcode = intent.getStringExtra(MainActivity.REQ_BARCODE_STATE);
@@ -119,7 +103,25 @@ public class AddingProductActivity extends AppCompatActivity {
                     call.cancel();
                 }
             });
+        } else {
+            mProduct = new Product();
         }
+
+        CalendarConstraints.Builder constraintsBuilder =
+                new CalendarConstraints.Builder()
+                        .setValidator(DateValidatorPointForward.now());
+        datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Set expiry date")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                        .setCalendarConstraints(constraintsBuilder.build())
+                        .build();
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            expiryDatePicked = selection;
+            mProduct.setExpiryDate(selection);
+            expiryDatePickerBtn.setText(datePicker.getHeaderText());
+        });
 
         toolbar.setNavigationOnClickListener(v -> sendResultActivity(false));
 
@@ -143,6 +145,9 @@ public class AddingProductActivity extends AppCompatActivity {
                     selectedChip = chipCategoryGroup.findViewById(id);
                     categorizes.add(selectedChip.getText().toString());
                 }
+                mProduct.setTitle(productTitleTextInput.getText().toString());
+                mProduct.setBrand(brandTextInput.getText().toString());
+                mProduct.setBarcode(barcodeTextInput.getText().toString());
                 mProduct.setProductCategorizes(categorizes);
                 mProduct.setPantry(selectedPantry);
                 mProduct.setKitchenId(MainActivity.getCurKitchenId());
