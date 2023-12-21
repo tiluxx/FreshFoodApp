@@ -1,6 +1,7 @@
 package com.application.freshfoodapp.remindbroadcast;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +50,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
                 });
     }
 
+    @SuppressLint("MissingPermission")
     private void showNotification(Context context, Intent intent, List<Product> products) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID_OFF_NOTIFICATION)
                 .setSmallIcon(R.drawable.ic_notifications_24)

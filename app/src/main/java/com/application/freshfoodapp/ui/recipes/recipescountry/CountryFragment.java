@@ -18,10 +18,7 @@ import com.application.freshfoodapp.adapter.RecipesVerticalAdapter;
 import com.application.freshfoodapp.databinding.FragmentCountryBinding;
 import com.application.freshfoodapp.model.Ingredient;
 import com.application.freshfoodapp.model.RootObjectModel;
-<<<<<<< Updated upstream
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
-=======
->>>>>>> Stashed changes
 import com.application.freshfoodapp.ui.recipes.RecipesFragment;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import java.util.ArrayList;

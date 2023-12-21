@@ -1,6 +1,7 @@
 package com.application.freshfoodapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -271,11 +272,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
-        long timeTrigger = System.currentTimeMillis() + 10 * 1000;
+        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
+//        long timeTrigger = System.currentTimeMillis() + 10 * 1000;
         alarmManager.set(AlarmManager.RTC_WAKEUP, timeTrigger, pendingIntent);
     }
 
+    @SuppressLint("MissingPermission")
     private void showNotification(List<Product> products) {
         if(!products.isEmpty()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

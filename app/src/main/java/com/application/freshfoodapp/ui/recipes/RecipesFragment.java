@@ -12,13 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.adapter.RecipesAdapter;
 import com.application.freshfoodapp.databinding.FragmentRecipesBinding;
 import com.application.freshfoodapp.model.RootObjectModel;
-<<<<<<< Updated upstream
+
 
 import com.application.freshfoodapp.model.SearchRecipes;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
@@ -27,10 +28,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-=======
+
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.google.android.material.imageview.ShapeableImageView;
->>>>>>> Stashed changes
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +63,9 @@ public class RecipesFragment extends Fragment {
                     boolean includeEdge = true;
                     recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
                     recyclerView.setAdapter(adapter);
+                }
+                if(rootObjectModels == null) {
+                    Toast.makeText(getContext(), "No formula found matches your restrictions and ingredients!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

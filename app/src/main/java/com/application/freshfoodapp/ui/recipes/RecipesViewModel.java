@@ -1,11 +1,19 @@
 package com.application.freshfoodapp.ui.recipes;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.api.APIService;
 import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.model.Restriction;
 import com.application.freshfoodapp.model.RootObjectModel;
 import com.application.freshfoodapp.model.SearchRecipes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
@@ -23,10 +31,14 @@ public class RecipesViewModel extends ViewModel {
     private static final String APP_ID = "fa0eb92f";
     private static final String APP_KEY = "f49ace5bca4a053d1b877b4d369a673a";
     private MutableLiveData<List<RootObjectModel>> mRecipes;
+    private List<String> restrictions;
+    private static FirebaseUser curUser;
     private String query = "";
-
+    private String healthy = "";
+    private String[] healthyLabels;
     public RecipesViewModel() {
         this.mRecipes = new MutableLiveData<>();
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
         prepareData();
     }
 
@@ -35,10 +47,10 @@ public class RecipesViewModel extends ViewModel {
     }
 
     private void prepareData() {
-        query = "";
         List<Product> products = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         db.collection("products")
+            .whereEqualTo("kitchenId", MainActivity.getCurKitchenId())
             .get()
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -56,19 +68,52 @@ public class RecipesViewModel extends ViewModel {
                     }
 
                     // Call api recipes from some ingredients in ProductCategorizes
-                    query = deleteDuplicates(query.substring(0, query.length()-1));
+                  if(!products.isEmpty()) {
+                      if(products.size() > 3) {
+                          query = deleteDuplicates(query.substring(0, query.length()-1));
+                      } else {
+                          query = query.substring(0, query.length()-1);
+                      }
+                  }
+                restrictions = new ArrayList<>();
+                db.collection("restrictions")
+                        .whereEqualTo("ownerId", curUser.getUid())
+                        .get()
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Restriction restriction;
+                                for (QueryDocumentSnapshot document : task1.getResult()) {
+                                    restriction = document.toObject(Restriction.class);
+                                    restriction.setOwnerId(document.getId());
+                                    restrictions = restriction.getRestrictions();
+                                }
 
-                    APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", query).enqueue(new Callback<SearchRecipes>() {
-                        @Override
-                        public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
-                            mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
-                        }
-                        @Override
-                        public void onFailure(Call<SearchRecipes> call, Throwable t) {
-                            mRecipes.postValue(null);
-                        }
-                    });
+                                if(!restrictions.isEmpty()) {
+                                    for(int i=0; i<restrictions.size(); i++) {
+                                        healthy += restrictions.get(i) + ",";
+                                    }
+                                    // Call api recipes from some healthyLabels in Restrictions
+                                    healthyLabels = new String[restrictions.size()];
+                                    healthyLabels = healthy.split(",");
+                                }
 
+                                if(!query.isEmpty()) {
+                                    System.out.println(query);
+                                    APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
+                                        @Override
+                                        public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
+                                            mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
+                                        }
+                                        @Override
+                                        public void onFailure(Call<SearchRecipes> call, Throwable t) {
+                                            mRecipes.postValue(null);
+                                        }
+                                    });
+                                } else {
+                                    mRecipes.postValue(null);
+                                }
+                            }
+                        });
                 }
             });
     }

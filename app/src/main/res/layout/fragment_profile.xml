@@ -68,12 +68,12 @@
             android:text="Set reminder notification" />
 
         <Button
-            style="@style/Widget.Material3.Button.TextButton.Icon"
             android:id="@+id/setRestrictionBtn"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_filter_24"
-            android:text="Set reminder notification" />
+            android:text="Set restrictions"
+            app:icon="@drawable/ic_filter_24" />
 
     </LinearLayout>
 

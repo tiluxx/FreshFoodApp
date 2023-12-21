@@ -4,6 +4,8 @@ import com.application.freshfoodapp.model.SearchRecipes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Array;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,6 +26,7 @@ public interface APIService {
     Call<SearchRecipes> searchRecipes (@Query("app_id") String app_id,
                                        @Query("app_key") String app_key,
                                        @Query("type") String type,
+                                       @Query("health") String[] health,
                                        @Query("q") String q);
     @GET("api/recipes/v2/by-uri")
     Call<SearchRecipes> loadDish (@Query("app_id") String app_id,

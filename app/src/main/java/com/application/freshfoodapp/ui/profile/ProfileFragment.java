@@ -13,12 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.application.freshfoodapp.MainActivity;
+import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.databinding.FragmentProfileBinding;
 import com.application.freshfoodapp.ui.auth.AuthActivity;
+import com.application.freshfoodapp.ui.profile.restriction.RestrictionFragment;
+import com.application.freshfoodapp.ui.recipes.RecipesFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -29,9 +33,16 @@ public class ProfileFragment extends Fragment {
     ShapeableImageView profileAvatar;
     Button setReminderBtn, setRestrictionBtn, logoutBtn;
     TextView displayNameTextView, emailTextView;
+    public static FirebaseUser curUser;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -73,6 +84,15 @@ public class ProfileFragment extends Fragment {
 
         logoutBtn.setOnClickListener(v -> {
             logoutConfirmDialog.show();
+        });
+
+        setRestrictionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString(RestrictionFragment.ARG_RESTRICTION, curUser.getUid());
+                MainActivity.getNavController().navigate(R.id.restrictionFragment, args);
+            }
         });
     }
 }
