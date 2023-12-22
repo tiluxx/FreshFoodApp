@@ -13,14 +13,20 @@ public class KitchenViewHolder extends RecyclerView.ViewHolder {
     private Button deleteProductBtn;
     private ShapeableImageView productImageView;
     private TextView productNameTextView, expiryDateTextView, quantityTextView;
+    private View itemView;
 
     public KitchenViewHolder(ProductItemCardBinding binding) {
         super(binding.getRoot());
+        itemView = binding.getRoot();
         deleteProductBtn = binding.deleteProductBtn;
         productImageView = binding.productImageView;
         productNameTextView = binding.productNameTextView;
         expiryDateTextView = binding.expiryDateTextView;
         quantityTextView = binding.quantityTextView;
+    }
+
+    public View getItemView() {
+        return itemView;
     }
 
     public Button getDeleteProductBtn() {

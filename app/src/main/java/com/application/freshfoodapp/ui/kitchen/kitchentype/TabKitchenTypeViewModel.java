@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TabKitchenTypeViewModel extends ViewModel {
@@ -37,6 +38,7 @@ public class TabKitchenTypeViewModel extends ViewModel {
                             products.add(product);
                             Log.d("RES", document.getId() + " => " + document.getData());
                         }
+                        products.sort(Comparator.comparing(Product::getExpiryDate));
                         mProducts.setValue(products);
 
                     } else {

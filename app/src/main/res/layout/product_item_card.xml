@@ -45,13 +45,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/clock"
                 android:drawablePadding="4dp"
-                android:drawableTint="@color/md_theme_dark_outline"
                 android:gravity="center"
                 android:text="@string/secondary_text"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                app:drawableTint="@color/md_theme_dark_outline"
+                app:drawableStartCompat="@drawable/clock" />
         </LinearLayout>
 
         <!-- Buttons -->
