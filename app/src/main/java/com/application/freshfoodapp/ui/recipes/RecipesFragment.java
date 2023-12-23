@@ -39,7 +39,6 @@ public class RecipesFragment extends Fragment {
     private List<RootObjectModel> recipe;
     private FragmentRecipesBinding binding;
     private RecipesViewModel mViewModel;
-
     public static final String ARG_COUNTRY = "country_name";
 
     public static RecipesFragment newInstance() {
@@ -63,9 +62,10 @@ public class RecipesFragment extends Fragment {
                     boolean includeEdge = true;
                     recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
                     recyclerView.setAdapter(adapter);
+                    Toast.makeText(getContext(), "Upload data successfully", Toast.LENGTH_SHORT).show();
                 }
                 if(rootObjectModels == null) {
-                    Toast.makeText(getContext(), "No formula found matches your restrictions and ingredients!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No formula found matches your restrictions and ingredients", Toast.LENGTH_SHORT).show();
                 }
             }
         });

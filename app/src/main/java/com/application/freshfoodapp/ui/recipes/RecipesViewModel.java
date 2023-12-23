@@ -68,52 +68,51 @@ public class RecipesViewModel extends ViewModel {
                     }
 
                     // Call api recipes from some ingredients in ProductCategorizes
-                  if(!products.isEmpty()) {
-                      if(products.size() > 3) {
-                          query = deleteDuplicates(query.substring(0, query.length()-1));
-                      } else {
-                          query = query.substring(0, query.length()-1);
-                      }
-                  }
+                    if(!products.isEmpty()) {
+                          if(products.size() > 3) {
+                              query = deleteDuplicates(query.substring(0, query.length()-1));
+                          } else {
+                              query = query.substring(0, query.length()-1);
+                          }
+                    }
                 restrictions = new ArrayList<>();
                 db.collection("restrictions")
-                        .whereEqualTo("ownerId", curUser.getUid())
-                        .get()
-                        .addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                Restriction restriction;
-                                for (QueryDocumentSnapshot document : task1.getResult()) {
-                                    restriction = document.toObject(Restriction.class);
-                                    restriction.setOwnerId(document.getId());
-                                    restrictions = restriction.getRestrictions();
-                                }
-
-                                if(!restrictions.isEmpty()) {
-                                    for(int i=0; i<restrictions.size(); i++) {
-                                        healthy += restrictions.get(i) + ",";
-                                    }
-                                    // Call api recipes from some healthyLabels in Restrictions
-                                    healthyLabels = new String[restrictions.size()];
-                                    healthyLabels = healthy.split(",");
-                                }
-
-                                if(!query.isEmpty()) {
-                                    System.out.println(query);
-                                    APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
-                                        @Override
-                                        public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
-                                            mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
-                                        }
-                                        @Override
-                                        public void onFailure(Call<SearchRecipes> call, Throwable t) {
-                                            mRecipes.postValue(null);
-                                        }
-                                    });
-                                } else {
-                                    mRecipes.postValue(null);
-                                }
+                    .whereEqualTo("ownerId", curUser.getUid())
+                    .get()
+                    .addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            Restriction restriction;
+                            for (QueryDocumentSnapshot document : task1.getResult()) {
+                                restriction = document.toObject(Restriction.class);
+                                restriction.setOwnerId(document.getId());
+                                restrictions = restriction.getRestrictions();
                             }
-                        });
+
+                            if(!restrictions.isEmpty()) {
+                                for(int i=0; i<restrictions.size(); i++) {
+                                    healthy += restrictions.get(i) + ",";
+                                }
+                                // Call api recipes from some healthyLabels in Restrictions
+                                healthyLabels = new String[restrictions.size()];
+                                healthyLabels = healthy.split(",");
+                            }
+
+                            if(!query.isEmpty()) {
+                                APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
+                                    @Override
+                                    public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
+                                        mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
+                                    }
+                                    @Override
+                                    public void onFailure(Call<SearchRecipes> call, Throwable t) {
+                                        mRecipes.postValue(null);
+                                    }
+                                });
+                            } else {
+                                mRecipes.postValue(null);
+                            }
+                        }
+                    });
                 }
             });
     }

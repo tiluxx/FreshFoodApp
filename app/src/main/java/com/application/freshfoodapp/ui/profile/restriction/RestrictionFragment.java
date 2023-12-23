@@ -158,10 +158,10 @@ public class RestrictionFragment extends Fragment {
                         restriction = new Restriction();
                         restriction.setOwnerId(ownerUid);
                         restriction.setRestrictions(restrictions);
-                        Toast.makeText(context, "Update restrictions successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Update restrictions successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         checkBtnClick = false;
-                        Toast.makeText(context, "Your restriction is none!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Your restriction is none", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -179,6 +179,7 @@ public class RestrictionFragment extends Fragment {
 
     private void cleanPrevData() {
         db.collection("restrictions")
+                .whereEqualTo("ownerId", ownerUid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
