@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.databinding.ProductItemCardBinding;
 import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.ui.productdetail.ProductDetailFragment;
+import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
 import com.application.freshfoodapp.viewholder.KitchenViewHolder;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,8 +59,6 @@ public class KitchenTypeAdapter extends RecyclerView.Adapter<KitchenViewHolder> 
         LocalDate expiryDate = convertToLocalDateViaInstant(calendar.getTime());
         holder.getExpiryDateTextView().setText(expiryDate.format(formatter));
         long duration = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
-        Log.i("TAG", "CONDITION: " + String.valueOf(duration <= 3 && expiryDate.isBefore(LocalDate.now())));
-        Log.i("TAG", String.valueOf(duration));
 
         if ((duration <= 3 && expiryDate.isAfter(LocalDate.now())) ||
                 (expiryDate.isBefore(LocalDate.now()))) {
@@ -66,29 +67,26 @@ public class KitchenTypeAdapter extends RecyclerView.Adapter<KitchenViewHolder> 
             holder.getProductNameTextView().setTextColor(color);
         }
 
-        holder.getDeleteProductBtn().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("products")
-                        .document(curProduct.getProductId())
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                data.remove(curProduct);
-                                notifyItemRemoved(curPosition);
-                                Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                                Log.w("ERROR", "Error deleting document", e);
-                            }
-                        });
-            }
+        holder.getDeleteProductBtn().setOnClickListener(v -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .document(curProduct.getProductId())
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        data.remove(curProduct);
+                        notifyItemRemoved(curPosition);
+                        Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Log.w("ERROR", "Error deleting document", e);
+                    });
+        });
+
+        holder.getItemView().setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString(ProductDetailFragment.ARG_PRODUCT_DETAIL, curProduct.getProductId());
+            MainActivity.getNavController().navigate(R.id.nav_product_detail, args);
         });
     }
 

@@ -268,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
     }
+
     private void getExpiryDate() {
         if(subKitchens != null) {
             subKitchens.add(new SubKitchen(curKitchenId, curUser.getDisplayName()));
@@ -328,9 +329,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setNotifyOffline() {
         Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-        intent.putExtra("currentOwnerEmail", curUser.getEmail().toString());
-        intent.putExtra("currentKitchenId", curKitchenId.toString());
-        intent.putExtra("currentKitchenName", curUser.getDisplayName().toString());
+        intent.putExtra("currentOwnerEmail", curUser.getEmail());
+        intent.putExtra("currentKitchenId", curKitchenId);
+        intent.putExtra("currentKitchenName", curUser.getDisplayName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 //        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
@@ -475,6 +476,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public static FirebaseUser getCurUser() {
         return curUser;
     }

@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.updatingproduct.UpdateProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.sendinginvitation.SendingInvitationActivity"
             android:exported="false" />
         <activity
@@ -44,11 +47,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="barcode" />
-        <receiver android:name=".remindbroadcast.ReminderBroadcast"/>
 
+        <receiver android:name=".remindbroadcast.ReminderBroadcast" />
     </application>
 
 </manifest>

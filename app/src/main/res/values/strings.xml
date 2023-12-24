@@ -117,4 +117,9 @@
     <string name="empty_description">Empty image</string>
     <string name="shared_kitchen_fragment_label">Shared kitchen</string>
     <string name="more_menu_sharing">More menu</string>
+    <string name="product_info_group">Product Details</string>
+    <string name="nutrition_info_group">Nutritions</string>
+    <string name="edit_product_desc">Edit Product</string>
+    <string name="update_product">Update Product</string>
+    <string name="update_product_page_title">Update Product</string>
 </resources>

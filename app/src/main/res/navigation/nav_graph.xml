@@ -34,6 +34,12 @@
         tools:layout="@layout/fragment_kitchen"/>
 
     <fragment
+        android:id="@+id/nav_product_detail"
+        android:name="com.application.freshfoodapp.ui.productdetail.ProductDetailFragment"
+        android:label="@string/kitchen_fragment_label"
+        tools:layout="@layout/fragment_product_detail"/>
+
+    <fragment
         android:id="@+id/nav_shopping"
         android:name="com.application.freshfoodapp.ui.shopping.ShoppingFragment"
         android:label="@string/shopping_fragment_label"
@@ -86,6 +92,7 @@
         android:name="com.application.freshfoodapp.ui.recipes.recipescountry.CountryFragment"
         android:label="Traditional meal"
         tools:layout="@layout/fragment_country" />
+
     <fragment
         android:id="@+id/restrictionFragment"
         android:name="com.application.freshfoodapp.ui.profile.restriction.RestrictionFragment"

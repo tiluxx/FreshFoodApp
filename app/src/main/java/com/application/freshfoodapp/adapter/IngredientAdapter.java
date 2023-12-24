@@ -44,6 +44,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientViewHolder
     public int getItemCount() {
         return data.size();
     }
+    
     public void updateIngredientList(List<Ingredient> data) {
         this.data = data;
         notifyDataSetChanged();
