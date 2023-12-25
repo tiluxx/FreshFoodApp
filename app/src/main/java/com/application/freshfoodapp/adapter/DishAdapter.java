@@ -67,24 +67,27 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("plannings")
-                        .document(item.getLabelDish())
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
+                    .whereEqualTo("dishUri", item.getUrlDish().toString())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                // Iterate through the retrieved documents and delete each one
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    deleteDocument(db.collection("plannings").document(document.getId()));
+                                }
                                 data.remove(item);
                                 notifyItemRemoved(curPosition);
-                                Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(), "Delete dish successfully", Toast.LENGTH_SHORT).show();
+
+                                if (onItemRemovedListener != null) {
+                                    onItemRemovedListener.onItemRemoved();
+                                }
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                                Log.w("ERROR", "Error deleting document", e);
-                            }
-                        });
-            }
+                        }
+                    });
+        }
         });
 
         holder.getItemView().setOnClickListener(v -> {
@@ -102,7 +105,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
     public void updateDishesList(List<ItemOfMeal> data) {
         this.data.clear();
         this.data.addAll(data);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, data.size());
     }
 
     private void deleteDocument(DocumentReference documentRef) {
@@ -117,5 +120,15 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
                 }
             }
         });
+    }
+
+    public interface OnItemRemovedListener {
+        void onItemRemoved();
+    }
+
+    private OnItemRemovedListener onItemRemovedListener;
+
+    public void setOnItemRemovedListener(OnItemRemovedListener listener) {
+        this.onItemRemovedListener = listener;
     }
 }

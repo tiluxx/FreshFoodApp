@@ -118,14 +118,11 @@
     <string name="empty_description">Empty image</string>
     <string name="shared_kitchen_fragment_label">Shared kitchen</string>
     <string name="more_menu_sharing">More menu</string>
-<<<<<<< Updated upstream
     <string name="product_info_group">Product Details</string>
     <string name="nutrition_info_group">Nutritions</string>
     <string name="edit_product_desc">Edit Product</string>
     <string name="update_product">Update Product</string>
     <string name="update_product_page_title">Update Product</string>
-=======
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
->>>>>>> Stashed changes
 </resources>

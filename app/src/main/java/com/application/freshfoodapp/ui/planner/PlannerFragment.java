@@ -70,7 +70,6 @@ public class PlannerFragment extends Fragment {
     private List<PlanForMeal> plans;
     private static final String APP_ID = "fa0eb92f";
     private static final String APP_KEY = "f49ace5bca4a053d1b877b4d369a673a";
-
     private List<RootObjectModel> recipe;
     private List<ItemOfMeal> breakfastMeal;
     private List<ItemOfMeal> breakMeal;
@@ -123,6 +122,7 @@ public class PlannerFragment extends Fragment {
         breakMeal = new ArrayList<>();
         dinnerMeal = new ArrayList<>();
         lunchMeal = new ArrayList<>();
+        boolean checkComplete = false;
 
         DishAdapter adapterBreakfast = new DishAdapter();
         RecyclerView recyclerView = binding.breakfastPlannerRecyclerView;
@@ -185,7 +185,7 @@ public class PlannerFragment extends Fragment {
 
                             adapterDinner.updateDishesList(dinnerMeal);
                         }
-                        Toast.makeText(getContext(), "Upload successfully", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
@@ -193,7 +193,12 @@ public class PlannerFragment extends Fragment {
                         Toast.makeText(getContext(), "Upload failure", Toast.LENGTH_SHORT).show();
                     }
                 });
+                checkComplete = true;
             }
+        }
+
+        if(checkComplete) {
+            Toast.makeText(getContext(), "Upload successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -204,9 +209,9 @@ public class PlannerFragment extends Fragment {
         lunchBtn = binding.lunchAdd;
         dinnerBtn = binding.dinnerAdd;
         expiryDatePickerBtn = binding.dateOfMealBtn2;
-
         expiryDatePickerBtn.setText(formatDate(Calendar.getInstance()));
         uploadData(plans, expiryDatePickerBtn.getText().toString());
+
         expiryDatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
