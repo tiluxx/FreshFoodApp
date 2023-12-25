@@ -107,7 +107,7 @@ public class AddDishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int num = Integer.parseInt(numberOfServings.getText().toString());
-                if(num > -1) {
+                if(num > 0) {
                     num += 1;
                     numberOfServings.setText(String.valueOf(num));
                 }
@@ -118,7 +118,7 @@ public class AddDishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int num = Integer.parseInt(numberOfServings.getText().toString());
-                if(num > 0) {
+                if(num > 1) {
                     num -= 1;
                     numberOfServings.setText(String.valueOf(num));
                 }

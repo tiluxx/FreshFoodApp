@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="@string/set_expiry_date"
+                android:text="Set date"
                 app:cornerRadius="8dp"
                 app:icon="@drawable/planner" />
         </LinearLayout>
