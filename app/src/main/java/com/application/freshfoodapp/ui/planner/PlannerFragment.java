@@ -88,7 +88,7 @@ public class PlannerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentPlannerBinding.inflate(inflater, container, false);
-        loadData();
+        prepareData();
         return binding.getRoot();
     }
 
@@ -99,7 +99,7 @@ public class PlannerFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-    private void loadData() {
+    private void loadData(String date) {
         plans = new ArrayList<>();
         db.collection("plannings")
                 .whereEqualTo("ownerId", curUser.getUid())
@@ -112,7 +112,7 @@ public class PlannerFragment extends Fragment {
                             plan.setOwnerId(document.getId());
                             plans.add(plan);
                         }
-                        prepareData(plans);
+                        uploadData(plans, date);
                     }
                 });
     }
@@ -159,7 +159,7 @@ public class PlannerFragment extends Fragment {
                             item.setUrlDish(plan.getDishUri());
                             breakfastMeal.add(item);
 
-                            adapterBreakfast.updateDishesList(breakfastMeal);
+
                         } else if (plan.getTypeOfMeal().equals("break")) {
                             item.setLabelDish(recipe.get(0).getRecipeModel().getLabel());
                             item.setImage(recipe.get(0).getRecipeModel().getImage());
@@ -167,7 +167,7 @@ public class PlannerFragment extends Fragment {
                             item.setUrlDish(plan.getDishUri());
                             breakMeal.add(item);
 
-                            adapterBreak.updateDishesList(breakMeal);
+
                         } else if (plan.getTypeOfMeal().equals("lunch")) {
                             item.setLabelDish(recipe.get(0).getRecipeModel().getLabel());
                             item.setImage(recipe.get(0).getRecipeModel().getImage());
@@ -175,7 +175,7 @@ public class PlannerFragment extends Fragment {
                             item.setUrlDish(plan.getDishUri());
                             lunchMeal.add(item);
 
-                            adapterLunch.updateDishesList(lunchMeal);
+
                         } else if (plan.getTypeOfMeal().equals("dinner")) {
                             item.setLabelDish(recipe.get(0).getRecipeModel().getLabel());
                             item.setImage(recipe.get(0).getRecipeModel().getImage());
@@ -183,9 +183,13 @@ public class PlannerFragment extends Fragment {
                             item.setUrlDish(plan.getDishUri());
                             dinnerMeal.add(item);
 
-                            adapterDinner.updateDishesList(dinnerMeal);
-                        }
 
+                        }
+                        System.out.println(breakfastMeal.size());
+                        adapterBreakfast.updateDishesList(breakfastMeal);
+                        adapterDinner.updateDishesList(dinnerMeal);
+                        adapterBreak.updateDishesList(breakMeal);
+                        adapterLunch.updateDishesList(lunchMeal);
                     }
 
                     @Override
@@ -202,7 +206,7 @@ public class PlannerFragment extends Fragment {
         }
     }
 
-    private void prepareData(List<PlanForMeal> plans) {
+    private void prepareData() {
         Button breakfastBtn, breakBtn, lunchBtn, dinnerBtn;
         breakfastBtn = binding.breakfastAdd;
         breakBtn = binding.breakAdd;
@@ -210,7 +214,7 @@ public class PlannerFragment extends Fragment {
         dinnerBtn = binding.dinnerAdd;
         expiryDatePickerBtn = binding.dateOfMealBtn2;
         expiryDatePickerBtn.setText(formatDate(Calendar.getInstance()));
-        uploadData(plans, expiryDatePickerBtn.getText().toString());
+        loadData(expiryDatePickerBtn.getText().toString());
 
         expiryDatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +231,7 @@ public class PlannerFragment extends Fragment {
                             public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
                                 String selectedDate = formatDate(selectedYear, monthOfYear, dayOfMonth);
                                 expiryDatePickerBtn.setText(selectedDate);
-                                uploadData(plans, expiryDatePickerBtn.getText().toString());
+                                loadData(expiryDatePickerBtn.getText().toString());
                             }
                         },
                         year, month, day

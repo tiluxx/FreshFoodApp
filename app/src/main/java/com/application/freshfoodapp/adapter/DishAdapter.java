@@ -80,10 +80,6 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
                                 data.remove(item);
                                 notifyItemRemoved(curPosition);
                                 Toast.makeText(v.getContext(), "Delete dish successfully", Toast.LENGTH_SHORT).show();
-
-                                if (onItemRemovedListener != null) {
-                                    onItemRemovedListener.onItemRemoved();
-                                }
                             }
                         }
                     });
@@ -105,7 +101,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
     public void updateDishesList(List<ItemOfMeal> data) {
         this.data.clear();
         this.data.addAll(data);
-        notifyItemRangeChanged(0, data.size());
+        notifyItemRangeRemoved(0, data.size());
     }
 
     private void deleteDocument(DocumentReference documentRef) {
@@ -120,15 +116,5 @@ public class DishAdapter extends RecyclerView.Adapter<DishesViewHolder> {
                 }
             }
         });
-    }
-
-    public interface OnItemRemovedListener {
-        void onItemRemoved();
-    }
-
-    private OnItemRemovedListener onItemRemovedListener;
-
-    public void setOnItemRemovedListener(OnItemRemovedListener listener) {
-        this.onItemRemovedListener = listener;
     }
 }
