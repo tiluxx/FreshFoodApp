@@ -1,6 +1,7 @@
 package com.application.freshfoodapp.ui.recipes.recipesdetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,19 +9,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.adapter.IngredientAdapter;
 import com.application.freshfoodapp.databinding.FragmentIngredientBinding;
 import com.application.freshfoodapp.model.Ingredient;
 import com.application.freshfoodapp.model.RootObjectModel;
+import com.application.freshfoodapp.ui.planner.adddish.AddDishActivity;
+import com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +39,13 @@ public class IngredientFragment extends Fragment {
     private List<RootObjectModel> recipe;
     private List<Ingredient> ingredients;
     private IngredientViewModel mViewModel;
-    private String uri = "";
+    public static String uri = "";
+    FloatingActionButton fabAddDish;
+    private boolean isFABOpen = false;
+    public static final int RC_ADD_DISH = 1001;
     Bundle args;
+
+
 
     public IngredientFragment() {
         // Required empty public constructor
@@ -87,9 +100,11 @@ public class IngredientFragment extends Fragment {
 
     private void prepareData() {
         TextView dishName, calories, totalTime, cuisine, meal, dish;
+
         ChipGroup chipGroup;
         ImageView dishImage;
 
+        fabAddDish = binding.addForMeal;
         dishName = binding.dishNameTextView;
         calories = binding.caloriesTextView;
         totalTime = binding.totalTimeTextView;
@@ -98,6 +113,13 @@ public class IngredientFragment extends Fragment {
         meal = binding.mealTextView2;
         dish = binding.dishTextView2;
         chipGroup = binding.chipCategoryGroup;
+
+        fabAddDish.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AddDishActivity.class);
+            intent.putExtra(SearchDishFragment.ARG_TYPE_MEAL, SearchDishFragment.type_of_meal.toString());
+
+            startActivityForResult(intent, RC_ADD_DISH);
+        });
 
         String cuisineType = "", mealType = "", dishType = "";
         for(String item: recipe.get(0).getRecipeModel().getCuisineType()) {

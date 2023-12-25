@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.application.freshfoodapp.databinding.IngredientDetailItemCardBinding;
 import com.application.freshfoodapp.model.Ingredient;
+import com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment;
 import com.application.freshfoodapp.viewholder.IngredientViewHolder;
 import java.util.List;
 

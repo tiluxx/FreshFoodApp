@@ -334,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("currentKitchenName", curUser.getDisplayName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
-        long timeTrigger = System.currentTimeMillis() + 10 * 1000;
+        long timeTrigger = System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000;
+//        long timeTrigger = System.currentTimeMillis() + 10 * 1000;
         alarmManager.set(AlarmManager.RTC_WAKEUP, timeTrigger, pendingIntent);
     }
 

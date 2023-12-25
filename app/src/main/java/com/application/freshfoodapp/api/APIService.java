@@ -28,6 +28,13 @@ public interface APIService {
                                        @Query("type") String type,
                                        @Query("health") String[] health,
                                        @Query("q") String q);
+
+    @GET("api/recipes/v2")
+    Call<SearchRecipes> searchDishes (@Query("app_id") String app_id,
+                                      @Query("app_key") String app_key,
+                                      @Query("type") String type,
+                                      @Query("q") String q);
+
     @GET("api/recipes/v2/by-uri")
     Call<SearchRecipes> loadDish (@Query("app_id") String app_id,
                                   @Query("app_key") String app_key,

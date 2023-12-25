@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingLeft="8dp"
+    android:paddingTop="6dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="6dp"
+    app:shapeAppearance="?attr/shapeAppearanceCornerMedium">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/dishImageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/content_description"
+            android:scaleType="centerCrop"
+            app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
+            app:srcCompat="@drawable/food_bowl"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/dishNameTextView2"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="Dish name"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/deleteProductBtn2"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/delete_button_string"
+            app:icon="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/numOfServings"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -45,6 +45,9 @@ public class RecipesViewModel extends ViewModel {
     public MutableLiveData<List<RootObjectModel>> getRecipes() {
         return mRecipes;
     }
+    public void updateRecipes(List<RootObjectModel> newRecipes) {
+        mRecipes.setValue(newRecipes);
+    }
 
     private void prepareData() {
         List<Product> products = new ArrayList<>();
@@ -102,6 +105,7 @@ public class RecipesViewModel extends ViewModel {
                                     @Override
                                     public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                                         mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
+                                        updateRecipes(Arrays.asList(response.body().getFoodRecipes()));
                                     }
                                     @Override
                                     public void onFailure(Call<SearchRecipes> call, Throwable t) {

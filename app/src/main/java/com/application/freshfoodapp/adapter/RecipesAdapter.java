@@ -13,10 +13,15 @@ import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
 import com.application.freshfoodapp.viewholder.RecipesViewHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
     private List<RootObjectModel> data;
+    public RecipesAdapter() {
+        this.data = new ArrayList<>();
+    }
     @NonNull
     @Override
     public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,11 +66,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data != null ? data.size() : 0;
     }
 
     public void updateRecipesList(List<RootObjectModel> data) {
-        this.data = data;
+        this.data.clear();
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 }

@@ -48,20 +48,24 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecipesAdapter adapter = new RecipesAdapter();
+
+        RecyclerView recyclerView = binding.carouselRecyclerView;
+        int spanCount = 2;
+        int spacing = 32;
+        boolean includeEdge = true;
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+        recyclerView.setAdapter(adapter);
+
         mViewModel = new ViewModelProvider(this).get(RecipesViewModel.class);
         mViewModel.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<RootObjectModel>>() {
             @Override
             public void onChanged(List<RootObjectModel> rootObjectModels) {
                 if(rootObjectModels != null) {
                     recipe = new ArrayList<>(rootObjectModels);
-                    RecipesAdapter adapter = new RecipesAdapter();
+
                     adapter.updateRecipesList(recipe);
-                    RecyclerView recyclerView = binding.carouselRecyclerView;
-                    int spanCount = recipe.size() + 1;
-                    int spacing = 32;
-                    boolean includeEdge = true;
-                    recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-                    recyclerView.setAdapter(adapter);
+
                     Toast.makeText(getContext(), "Upload data successfully", Toast.LENGTH_SHORT).show();
                 }
                 if(rootObjectModels == null) {

@@ -9,14 +9,20 @@ import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.databinding.RecipesItemVerticalCardBinding;
 import com.application.freshfoodapp.model.RootObjectModel;
+import com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment;
 import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
 import com.application.freshfoodapp.viewholder.RecipesVerticalViewHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesVerticalAdapter extends RecyclerView.Adapter<RecipesVerticalViewHolder> {
     private List<RootObjectModel> data;
+    public RecipesVerticalAdapter() {
+        this.data = new ArrayList<>();
+    }
     @NonNull
     @Override
     public RecipesVerticalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,11 +67,12 @@ public class RecipesVerticalAdapter extends RecyclerView.Adapter<RecipesVertical
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data != null ? data.size() : 0;
     }
 
     public void updateRecipesList(List<RootObjectModel> data) {
-        this.data = data;
+        this.data.clear();
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 }
