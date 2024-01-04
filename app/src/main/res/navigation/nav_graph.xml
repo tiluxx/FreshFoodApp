@@ -64,6 +64,12 @@
         tools:layout="@layout/fragment_planner"/>
 
     <fragment
+        android:id="@+id/nav_weekly_planner"
+        android:name="com.application.freshfoodapp.ui.planner.weeklyplanner.WeeklyPlannerFragment"
+        android:label="@string/weekly_planner_fragment_label"
+        tools:layout="@layout/fragment_weekly_planner" />
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.application.freshfoodapp.ui.profile.ProfileFragment"
         android:label="@string/profile_fragment_label"
@@ -98,14 +104,16 @@
         android:name="com.application.freshfoodapp.ui.profile.restriction.RestrictionFragment"
         android:label="@string/restriction_fragment_label"
         tools:layout="@layout/fragment_restriction" />
+
     <fragment
         android:id="@+id/searchDishFragment"
         android:name="com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment"
         android:label="@string/search_dish_fragment_label"
         tools:layout="@layout/fragment_search_dish" />
-    <fragment
+
+    <!--<fragment
         android:id="@+id/addDishActivity"
         android:name="com.application.freshfoodapp.ui.planner.adddish.AddDishActivity"
         android:label="fragment_add_dish_activity"
-        tools:layout="@layout/fragment_add_dish_activity" />
+        tools:layout="@layout/fragment_add_dish_activity" />-->
 </navigation>

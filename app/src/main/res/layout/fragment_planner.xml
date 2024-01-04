@@ -16,17 +16,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/dateOfMealBtn2"
-                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:text="@string/set_expiry_date"
-                app:cornerRadius="8dp"
-                app:icon="@drawable/planner" />
+                android:layout_marginHorizontal="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/dateOfMealBtn2"
+                    style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/set_expiry_date"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/planner" />
+
+                <Button
+                    android:id="@+id/textButton"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_date_range"
+                    android:text="Week" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView9"

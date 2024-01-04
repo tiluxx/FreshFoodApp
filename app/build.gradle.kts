@@ -34,9 +34,11 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("freshfoodapp_config")
+            isDebuggable = false
         }
         getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = true
         }
     }
     compileOptions {
