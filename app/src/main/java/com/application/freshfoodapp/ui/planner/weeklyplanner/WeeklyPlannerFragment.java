@@ -1,15 +1,6 @@
 package com.application.freshfoodapp.ui.planner.weeklyplanner;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,39 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.application.freshfoodapp.R;
-import com.application.freshfoodapp.adapter.DishAdapter;
-import com.application.freshfoodapp.api.APIService;
-import com.application.freshfoodapp.databinding.FragmentSearchDishBinding;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.application.freshfoodapp.adapter.WeeklyMealDishesAdapter;
 import com.application.freshfoodapp.databinding.FragmentWeeklyPlannerBinding;
-import com.application.freshfoodapp.databinding.WeeklyMealListItemBinding;
-import com.application.freshfoodapp.model.ItemOfMeal;
 import com.application.freshfoodapp.model.PlanForMeal;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.WeeklyDish;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WeeklyPlannerFragment extends Fragment {
 
@@ -59,8 +42,6 @@ public class WeeklyPlannerFragment extends Fragment {
     FirebaseFirestore db;
     private List<PlanForMeal> plans;
     public static String planWeek = "";
-    private static final String APP_ID = "fa0eb92f";
-    private static final String APP_KEY = "f49ace5bca4a053d1b877b4d369a673a";
     Bundle args;
     TextView mondayTextView, tuesdayTextView, wednesdayTextView, thursdayTextView,
             fridayTextView, saturdayTextView, sundayTextView, currentWeek;
@@ -86,7 +67,8 @@ public class WeeklyPlannerFragment extends Fragment {
             }
         }
         prepareDate();
-        return binding.getRoot();    }
+        return binding.getRoot();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,22 +91,16 @@ public class WeeklyPlannerFragment extends Fragment {
         LocalDate currentDate = LocalDate.parse(planWeek, formatter);
         updateWeekDates(currentDate);
 
-        navigateToPreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocalDate date = LocalDate.parse(currentWeek.getText(), formatter);
-                LocalDate previousWeekStartDate = date.minusWeeks(1);
-                updateWeekDates(previousWeekStartDate);
-            }
+        navigateToPreviousButton.setOnClickListener(v -> {
+            LocalDate date = LocalDate.parse(currentWeek.getText(), formatter);
+            LocalDate previousWeekStartDate = date.minusWeeks(1);
+            updateWeekDates(previousWeekStartDate);
         });
 
-        navigateToNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocalDate date = LocalDate.parse(currentWeek.getText(), formatter);
-                LocalDate nextWeekStartDate = date.plusWeeks(1);
-                updateWeekDates(nextWeekStartDate);
-            }
+        navigateToNextButton.setOnClickListener(v -> {
+            LocalDate date = LocalDate.parse(currentWeek.getText(), formatter);
+            LocalDate nextWeekStartDate = date.plusWeeks(1);
+            updateWeekDates(nextWeekStartDate);
         });
 
         currentWeek.addTextChangedListener(new TextWatcher() {
@@ -186,73 +162,427 @@ public class WeeklyPlannerFragment extends Fragment {
     }
 
     private void updateData(List<PlanForMeal> plans) {
-        DishAdapter adapterMonday = new DishAdapter();
-        RecyclerView recyclerView = binding.plannerMondayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterMonday);
+        WeeklyDish monBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish monLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish monBreakDishes = new WeeklyDish("Break");
+        WeeklyDish monDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterTuesday = new DishAdapter();
-        RecyclerView recyclerView2 = binding.plannerTuesdayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterTuesday);
+        WeeklyDish tueBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish tueLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish tueBreakDishes = new WeeklyDish("Break");
+        WeeklyDish tueDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterWednesday = new DishAdapter();
-        RecyclerView recyclerView3 = binding.plannerWednesdayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterWednesday);
+        WeeklyDish wedBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish wedLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish wedBreakDishes = new WeeklyDish("Break");
+        WeeklyDish wedDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterThursday = new DishAdapter();
-        RecyclerView recyclerView4 = binding.plannerThursdayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterThursday);
+        WeeklyDish thuBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish thuLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish thuBreakDishes = new WeeklyDish("Break");
+        WeeklyDish thuDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterFriday = new DishAdapter();
-        RecyclerView recyclerView5 = binding.plannerFridayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterFriday);
+        WeeklyDish friBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish friLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish friBreakDishes = new WeeklyDish("Break");
+        WeeklyDish friDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterSaturday = new DishAdapter();
-        RecyclerView recyclerView6 = binding.plannerSaturdayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterSaturday);
+        WeeklyDish satBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish satLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish satBreakDishes = new WeeklyDish("Break");
+        WeeklyDish satDinnerDishes = new WeeklyDish("Dinner");
 
-        DishAdapter adapterSunday = new DishAdapter();
-        RecyclerView recyclerView7 = binding.plannerSundayRecyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapterSunday);
+        WeeklyDish sunBreakfastDishes = new WeeklyDish("Breakfast");
+        WeeklyDish sunLunchDishes = new WeeklyDish("Lunch");
+        WeeklyDish sunBreakDishes = new WeeklyDish("Break");
+        WeeklyDish sunDinnerDishes = new WeeklyDish("Dinner");
 
-        for(PlanForMeal plan : plans) {
+        // Monday
+        WeeklyMealDishesAdapter monBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView monBreakfastRecipesRecyclerView = binding.breakfastRecipesRecyclerView;
+        monBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        monBreakfastRecipesRecyclerView.setAdapter(monBreakfastAdapter);
 
+        WeeklyMealDishesAdapter monLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView monLunchRecipesRecyclerView = binding.breakfastRecipesRecyclerView;
+        monLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        monLunchRecipesRecyclerView.setAdapter(monLunchAdapter);
+
+        WeeklyMealDishesAdapter monBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView monBreakRecipesRecyclerView = binding.breakfastRecipesRecyclerView;
+        monBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        monBreakRecipesRecyclerView.setAdapter(monBreakAdapter);
+
+        WeeklyMealDishesAdapter monDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView monDinnerRecipesRecyclerView = binding.breakfastRecipesRecyclerView;
+        monDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        monDinnerRecipesRecyclerView.setAdapter(monDinnerAdapter);
+
+        // Tuesday
+        WeeklyMealDishesAdapter tueBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView tueBreakfastRecipesRecyclerView = binding.tueBreakfastRecipesRecyclerView;
+        tueBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tueBreakfastRecipesRecyclerView.setAdapter(tueBreakfastAdapter);
+
+        WeeklyMealDishesAdapter tueLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView tueLunchRecipesRecyclerView = binding.tueLunchRecipesRecyclerView;
+        tueLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tueLunchRecipesRecyclerView.setAdapter(tueLunchAdapter);
+
+        WeeklyMealDishesAdapter tueBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView tueBreakRecipesRecyclerView = binding.tueBreakRecipesRecyclerView;
+        tueBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tueBreakRecipesRecyclerView.setAdapter(tueBreakAdapter);
+
+        WeeklyMealDishesAdapter tueDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView tueDinnerRecipesRecyclerView = binding.tueDinnerRecipesRecyclerView;
+        tueDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tueDinnerRecipesRecyclerView.setAdapter(tueDinnerAdapter);
+
+        // Wednesday
+        WeeklyMealDishesAdapter wedBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView wedBreakfastRecipesRecyclerView = binding.wedBreakfastRecipesRecyclerView;
+        wedBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        wedBreakfastRecipesRecyclerView.setAdapter(wedBreakfastAdapter);
+
+        WeeklyMealDishesAdapter wedLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView wedLunchRecipesRecyclerView = binding.wedLunchRecipesRecyclerView;
+        wedLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        wedLunchRecipesRecyclerView.setAdapter(wedLunchAdapter);
+
+        WeeklyMealDishesAdapter wedBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView wedBreakRecipesRecyclerView = binding.wedBreakRecipesRecyclerView;
+        wedBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        wedBreakRecipesRecyclerView.setAdapter(wedBreakAdapter);
+
+        WeeklyMealDishesAdapter wedDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView wedDinnerRecipesRecyclerView = binding.wedDinnerRecipesRecyclerView;
+        wedDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        wedDinnerRecipesRecyclerView.setAdapter(wedDinnerAdapter);
+
+        // Thursday
+        WeeklyMealDishesAdapter thuBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView thuBreakfastRecipesRecyclerView = binding.thuBreakfastRecipesRecyclerView;
+        thuBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        thuBreakfastRecipesRecyclerView.setAdapter(thuBreakfastAdapter);
+
+        WeeklyMealDishesAdapter thuLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView thuLunchRecipesRecyclerView = binding.thuLunchRecipesRecyclerView;
+        thuLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        thuLunchRecipesRecyclerView.setAdapter(thuLunchAdapter);
+
+        WeeklyMealDishesAdapter thuBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView thuBreakRecipesRecyclerView = binding.thuBreakRecipesRecyclerView;
+        thuBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        thuBreakRecipesRecyclerView.setAdapter(thuBreakAdapter);
+
+        WeeklyMealDishesAdapter thuDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView thuDinnerRecipesRecyclerView = binding.thuDinnerRecipesRecyclerView;
+        thuDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        thuDinnerRecipesRecyclerView.setAdapter(thuDinnerAdapter);
+
+        // Friday
+        WeeklyMealDishesAdapter friBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView friBreakfastRecipesRecyclerView = binding.friBreakfastRecipesRecyclerView;
+        friBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        friBreakfastRecipesRecyclerView.setAdapter(friBreakfastAdapter);
+
+        WeeklyMealDishesAdapter friLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView friLunchRecipesRecyclerView = binding.friLunchRecipesRecyclerView;
+        friLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        friLunchRecipesRecyclerView.setAdapter(friLunchAdapter);
+
+        WeeklyMealDishesAdapter friBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView friBreakRecipesRecyclerView = binding.friBreakRecipesRecyclerView;
+        friBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        friBreakRecipesRecyclerView.setAdapter(friBreakAdapter);
+
+        WeeklyMealDishesAdapter friDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView friDinnerRecipesRecyclerView = binding.friDinnerRecipesRecyclerView;
+        friDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        friDinnerRecipesRecyclerView.setAdapter(friDinnerAdapter);
+
+        // Saturday
+        WeeklyMealDishesAdapter satBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView satBreakfastRecipesRecyclerView = binding.satBreakfastRecipesRecyclerView;
+        satBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        satBreakfastRecipesRecyclerView.setAdapter(satBreakfastAdapter);
+
+        WeeklyMealDishesAdapter satLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView satLunchRecipesRecyclerView = binding.satLunchRecipesRecyclerView;
+        satLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        satLunchRecipesRecyclerView.setAdapter(satLunchAdapter);
+
+        WeeklyMealDishesAdapter satBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView satBreakRecipesRecyclerView = binding.satBreakRecipesRecyclerView;
+        satBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        satBreakRecipesRecyclerView.setAdapter(satBreakAdapter);
+
+        WeeklyMealDishesAdapter satDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView satDinnerRecipesRecyclerView = binding.satDinnerRecipesRecyclerView;
+        satDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        satDinnerRecipesRecyclerView.setAdapter(satDinnerAdapter);
+
+        // Sunday
+        WeeklyMealDishesAdapter sunBreakfastAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView sunBreakfastRecipesRecyclerView = binding.sunBreakfastRecipesRecyclerView;
+        sunBreakfastRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sunBreakfastRecipesRecyclerView.setAdapter(sunBreakfastAdapter);
+
+        WeeklyMealDishesAdapter sunLunchAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView sunLunchRecipesRecyclerView = binding.sunLunchRecipesRecyclerView;
+        sunLunchRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sunLunchRecipesRecyclerView.setAdapter(sunLunchAdapter);
+
+        WeeklyMealDishesAdapter sunBreakAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView sunBreakRecipesRecyclerView = binding.sunBreakRecipesRecyclerView;
+        sunBreakRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sunBreakRecipesRecyclerView.setAdapter(sunBreakAdapter);
+
+        WeeklyMealDishesAdapter sunDinnerAdapter = new WeeklyMealDishesAdapter();
+        RecyclerView sunDinnerRecipesRecyclerView = binding.sunDinnerRecipesRecyclerView;
+        sunDinnerRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sunDinnerRecipesRecyclerView.setAdapter(sunDinnerAdapter);
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dayOfPlannedMeal;
+        for (PlanForMeal plan : plans) {
+            dayOfPlannedMeal = Instant.ofEpochMilli(plan.getDateOfPlan())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (currentDate.isEqual(dayOfPlannedMeal)) {
+                if (currentDate.with(DayOfWeek.MONDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            monBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            monBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            monLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            monDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else if (currentDate.with(DayOfWeek.TUESDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            tueBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            tueBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            tueLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            tueDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else if (currentDate.with(DayOfWeek.WEDNESDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            wedBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            wedBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            wedLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            wedDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else if (currentDate.with(DayOfWeek.THURSDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            thuBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            thuBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            thuLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            thuDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else if (currentDate.with(DayOfWeek.FRIDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            friBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            friBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            friLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            friDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else if (currentDate.with(DayOfWeek.SATURDAY).getDayOfWeek()
+                        .compareTo(dayOfPlannedMeal.getDayOfWeek()) == 0) {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            satBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            satBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            satLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            satDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                } else {
+                    switch (plan.getTypeOfMeal()) {
+                        case "breakfast":
+                            sunBreakfastDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "break":
+                            sunBreakDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        case "lunch":
+                            sunLunchDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                        default:
+                            sunDinnerDishes.getDishesInDayOfWeek().add(plan);
+                            break;
+                    }
+                }
+            }
         }
-    }
 
-    private String formatDate(int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
-        return dateFormat.format(calendar.getTime());
-    }
-
-    private String formatDate(Calendar calendar) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
-        return dateFormat.format(calendar.getTime());
-    }
-
-    private Date parseFormattedDate(String formattedDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault());
-        try {
-            return dateFormat.parse(formattedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return new Date();
+        monBreakfastAdapter.updateWeeklyMealDishesList(monBreakfastDishes.getDishesInDayOfWeek());
+        monBreakAdapter.updateWeeklyMealDishesList(monBreakDishes.getDishesInDayOfWeek());
+        monLunchAdapter.updateWeeklyMealDishesList(monLunchDishes.getDishesInDayOfWeek());
+        monDinnerAdapter.updateWeeklyMealDishesList(monDinnerDishes.getDishesInDayOfWeek());
+        if (monBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.monMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
         }
-    }
+        if (monBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.monMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (monLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.monMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (monDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.monMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
 
-    private long convertDateToLong(Date date) {
-        if (date != null) {
-            return date.getTime();
-        } else {
-            return -1; // or any default value you want to use for null dates
+        tueBreakfastAdapter.updateWeeklyMealDishesList(tueBreakfastDishes.getDishesInDayOfWeek());
+        tueBreakAdapter.updateWeeklyMealDishesList(tueBreakDishes.getDishesInDayOfWeek());
+        tueLunchAdapter.updateWeeklyMealDishesList(tueLunchDishes.getDishesInDayOfWeek());
+        tueDinnerAdapter.updateWeeklyMealDishesList(tueDinnerDishes.getDishesInDayOfWeek());
+        if (tueBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.tueMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (tueBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.tueMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (tueLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.tueMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (tueDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.tueMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
+
+        wedBreakfastAdapter.updateWeeklyMealDishesList(wedBreakfastDishes.getDishesInDayOfWeek());
+        wedBreakAdapter.updateWeeklyMealDishesList(wedBreakDishes.getDishesInDayOfWeek());
+        wedLunchAdapter.updateWeeklyMealDishesList(wedLunchDishes.getDishesInDayOfWeek());
+        wedDinnerAdapter.updateWeeklyMealDishesList(wedDinnerDishes.getDishesInDayOfWeek());
+        if (wedBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.wedMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (wedBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.wedMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (wedLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.wedMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (wedDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.wedMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
+
+        thuBreakfastAdapter.updateWeeklyMealDishesList(thuBreakfastDishes.getDishesInDayOfWeek());
+        thuBreakAdapter.updateWeeklyMealDishesList(thuBreakDishes.getDishesInDayOfWeek());
+        thuLunchAdapter.updateWeeklyMealDishesList(thuLunchDishes.getDishesInDayOfWeek());
+        thuDinnerAdapter.updateWeeklyMealDishesList(thuDinnerDishes.getDishesInDayOfWeek());
+        if (thuBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.thuMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (thuBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.thuMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (thuLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.thuMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (thuDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.thuMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
+
+        friBreakfastAdapter.updateWeeklyMealDishesList(friBreakfastDishes.getDishesInDayOfWeek());
+        friBreakAdapter.updateWeeklyMealDishesList(friBreakDishes.getDishesInDayOfWeek());
+        friLunchAdapter.updateWeeklyMealDishesList(friLunchDishes.getDishesInDayOfWeek());
+        friDinnerAdapter.updateWeeklyMealDishesList(friDinnerDishes.getDishesInDayOfWeek());
+        if (friBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.friMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (friBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.friMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (friLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.friMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (friDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.friMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
+
+        satBreakfastAdapter.updateWeeklyMealDishesList(satBreakfastDishes.getDishesInDayOfWeek());
+        satBreakAdapter.updateWeeklyMealDishesList(satBreakDishes.getDishesInDayOfWeek());
+        satLunchAdapter.updateWeeklyMealDishesList(satLunchDishes.getDishesInDayOfWeek());
+        satDinnerAdapter.updateWeeklyMealDishesList(satDinnerDishes.getDishesInDayOfWeek());
+        if (satBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.satMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (satBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.satMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (satLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.satMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (satDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.satMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
+        }
+
+        sunBreakfastAdapter.updateWeeklyMealDishesList(sunBreakfastDishes.getDishesInDayOfWeek());
+        sunBreakAdapter.updateWeeklyMealDishesList(sunBreakDishes.getDishesInDayOfWeek());
+        sunLunchAdapter.updateWeeklyMealDishesList(sunLunchDishes.getDishesInDayOfWeek());
+        sunDinnerAdapter.updateWeeklyMealDishesList(sunDinnerDishes.getDishesInDayOfWeek());
+        if (sunBreakfastDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.sunMealTypeBreakfastEmptyTextView.setVisibility(View.GONE);
+        }
+        if (sunBreakDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.sunMealTypeBreakEmptyTextView.setVisibility(View.GONE);
+        }
+        if (sunLunchDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.sunMealTypeLunchEmptyTextView.setVisibility(View.GONE);
+        }
+        if (sunDinnerDishes.getDishesInDayOfWeek().size() > 0) {
+            binding.sunMealTypeDinnerEmptyTextView.setVisibility(View.GONE);
         }
     }
 }

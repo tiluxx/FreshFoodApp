@@ -73,12 +73,197 @@
                         android:text="Mon, January 1, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerMondayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/monBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/mealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/mealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/monMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/breakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/monLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/mealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/mealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/monMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/lunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/monBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/mealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/mealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/monMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/breakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/monDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/mealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/mealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/monMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/dinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -95,12 +280,196 @@
                         android:text="Tue, January 2, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerTuesdayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/tueBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/tueMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/tueMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/tueMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/tueBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/tueLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/tueMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/tueMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/tueMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/tueLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/tueBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/tueMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/tueMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/tueMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/tueBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/tueDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/tueMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/tueMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/tueMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/tueDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -117,12 +486,197 @@
                         android:text="Wed, January 3, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerWednesdayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/wedBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/wedMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/wedMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/wedMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/wedBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/wedLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/wedMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/wedMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/wedMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/wedLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/wedBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/wedMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/wedMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/wedMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/wedBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/wedDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/wedMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/wedMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/wedMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/wedDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -139,12 +693,197 @@
                         android:text="Thu, January 4, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerThursdayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/thuBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/thuMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/thuMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/thuMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/thuBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/thuLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/thuMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/thuMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/thuMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/thuLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/thuBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/thuMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/thuMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/thuMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/thuBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/thuDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/thuMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/thuMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/thuMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/thuDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -161,12 +900,197 @@
                         android:text="Fri, January 5, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerFridayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/friBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/friMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/friMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/friMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/friBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/friLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/friMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/friMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/friMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/friLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/friBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/friMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/friMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/friMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/friBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/friDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/friMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/friMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/friMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/friDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -183,12 +1107,197 @@
                         android:text="Sat, January 6, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerSaturdayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/satBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/satMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/satMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/satMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/satBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/satLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/satMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/satMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/satMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/satLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/satBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/satMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/satMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/satMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/satBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/satDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/satMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/satMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/satMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/satDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
@@ -205,12 +1314,197 @@
                         android:text="Sun, January 7, 2024"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/plannerSundayRecyclerView"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/sunBreakfastCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/sunMealTypeBreakfastLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/sunMealTypeBreakfastTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Breakfast"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/sunMealTypeBreakfastEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/sunBreakfastRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/sunLunchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/sunMealTypeLunchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/sunMealTypeLunchTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lunch"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/sunMealTypeLunchEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/sunLunchRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/sunBreakCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/sunMealTypeBreakLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/sunMealTypeBreakTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Break"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/sunMealTypeBreakEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/sunBreakRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/sunDinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        style="?attr/materialCardViewElevatedStyle">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/sunMealTypeDinnerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <!-- Title, secondary and supporting text -->
+                                <TextView
+                                    android:id="@+id/sunMealTypeDinnerTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dinner"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                                <TextView
+                                    android:id="@+id/sunMealTypeDinnerEmptyTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/no_dishes_planned"
+                                    android:layout_marginTop="8dp"
+                                    android:textAppearance="?attr/textAppearanceCaption" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/sunDinnerRecipesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
