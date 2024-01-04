@@ -33,7 +33,7 @@
                     app:icon="@drawable/planner" />
 
                 <Button
-                    android:id="@+id/textButton"
+                    android:id="@+id/weekBtn"
                     style="@style/Widget.Material3.Button.TextButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

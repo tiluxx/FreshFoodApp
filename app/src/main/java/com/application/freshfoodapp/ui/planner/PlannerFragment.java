@@ -38,6 +38,7 @@ import com.application.freshfoodapp.model.Restriction;
 import com.application.freshfoodapp.model.RootObjectModel;
 import com.application.freshfoodapp.model.SearchRecipes;
 import com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment;
+import com.application.freshfoodapp.ui.planner.weeklyplanner.WeeklyPlannerFragment;
 import com.application.freshfoodapp.ui.recipes.RecipesFragment;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -185,7 +186,6 @@ public class PlannerFragment extends Fragment {
 
 
                         }
-                        System.out.println(breakfastMeal.size());
                         adapterBreakfast.updateDishesList(breakfastMeal);
                         adapterDinner.updateDishesList(dinnerMeal);
                         adapterBreak.updateDishesList(breakMeal);
@@ -207,7 +207,8 @@ public class PlannerFragment extends Fragment {
     }
 
     private void prepareData() {
-        Button breakfastBtn, breakBtn, lunchBtn, dinnerBtn;
+        Button breakfastBtn, breakBtn, lunchBtn, dinnerBtn, weekBtn;
+        weekBtn = binding.weekBtn;
         breakfastBtn = binding.breakfastAdd;
         breakBtn = binding.breakAdd;
         lunchBtn = binding.lunchAdd;
@@ -243,6 +244,15 @@ public class PlannerFragment extends Fragment {
                 datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
                 datePickerDialog.show();
+            }
+        });
+
+        weekBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString(WeeklyPlannerFragment.ARG_WEEK_VIEW, expiryDatePickerBtn.getText().toString());
+                MainActivity.getNavController().navigate(R.id.nav_weekly_planner, args);
             }
         });
 

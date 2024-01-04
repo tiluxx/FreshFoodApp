@@ -175,7 +175,6 @@ public class AddDishActivity extends AppCompatActivity {
                 } else if(dinnerBtn.isChecked()) {
                     typeOfMeal = "dinner";
                 }
-
                 PlanForMeal planForMeal = new PlanForMeal();
                 planForMeal.setDateOfPlan(convertDateToLong(initialDate));
                 planForMeal.setTypeOfMeal(typeOfMeal);
