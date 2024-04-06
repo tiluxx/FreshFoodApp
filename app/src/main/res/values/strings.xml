@@ -129,4 +129,5 @@
     <string name="back_to_previous_week">Back to previous week</string>
     <string name="weekly_planner_fragment_label">Weekly</string>
     <string name="no_dishes_planned">No dishes planned</string>
+    <string name="sort_button_string">Sort product button</string>
 </resources>

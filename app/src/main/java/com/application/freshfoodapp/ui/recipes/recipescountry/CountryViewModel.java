@@ -5,9 +5,14 @@ import androidx.lifecycle.ViewModel;
 import com.application.freshfoodapp.api.APIService;
 import com.application.freshfoodapp.model.RootObjectModel;
 import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.ui.recipes.CountriesRecipe;
+import com.application.freshfoodapp.ui.recipes.cuisinetypefactory.CuisineType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,8 +30,8 @@ public class CountryViewModel extends ViewModel {
         return mRecipes;
     }
 
-    public void prepareData(String country_name) {
-        APIService.apiService.loadDishBaseOnCountry(APP_ID, APP_KEY,"public", country_name).enqueue(new Callback<SearchRecipes>() {
+    public void prepareData(CuisineType cuisineType) {
+        APIService.apiService.loadDishBaseOnCountry(APP_ID, APP_KEY,"public", cuisineType.getCuisineType()).enqueue(new Callback<SearchRecipes>() {
             @Override
             public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

@@ -20,6 +20,7 @@ import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.databinding.ProductItemCardBinding;
 import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.ui.kitchen.sortingstrategy.ProductSorter;
 import com.application.freshfoodapp.ui.productdetail.ProductDetailFragment;
 import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
 import com.application.freshfoodapp.viewholder.KitchenViewHolder;

@@ -18,6 +18,8 @@ import com.application.freshfoodapp.adapter.RecipesVerticalAdapter;
 import com.application.freshfoodapp.databinding.FragmentCountryBinding;
 import com.application.freshfoodapp.model.Ingredient;
 import com.application.freshfoodapp.model.RootObjectModel;
+import com.application.freshfoodapp.ui.recipes.CountriesRecipe;
+import com.application.freshfoodapp.ui.recipes.cuisinetypefactory.CuisineTypeFactory;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
 import com.application.freshfoodapp.ui.recipes.RecipesFragment;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
@@ -29,7 +31,7 @@ public class CountryFragment extends Fragment {
     private List<RootObjectModel> recipe;
     private List<Ingredient> ingredients;
     private CountryViewModel mViewModel;
-    private String country_name = null;
+    private CountriesRecipe country_name = null;
     Bundle args;
 
 
@@ -50,9 +52,9 @@ public class CountryFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CountryViewModel.class);
         args = getArguments();
         if (args != null) {
-            if (args.getString(RecipesFragment.ARG_COUNTRY) != null) {
-                country_name = args.getString(RecipesFragment.ARG_COUNTRY);
-                mViewModel.prepareData(args.getString(RecipesFragment.ARG_COUNTRY));
+            if (args.getSerializable(RecipesFragment.ARG_COUNTRY) != null) {
+                country_name = (CountriesRecipe) args.getSerializable(RecipesFragment.ARG_COUNTRY);
+                mViewModel.prepareData(CuisineTypeFactory.createCuisineType(country_name));
             }
         }
         return binding.getRoot();

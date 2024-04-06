@@ -108,7 +108,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(RecipesFragment.ARG_COUNTRY, "japanese");
+                args.putSerializable(RecipesFragment.ARG_COUNTRY, CountriesRecipe.JAPANESE);
                 MainActivity.getNavController().navigate(R.id.nav_country, args);
             }
         });
@@ -117,7 +117,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(RecipesFragment.ARG_COUNTRY, "chinese");
+                args.putSerializable(RecipesFragment.ARG_COUNTRY, CountriesRecipe.CHINESE);
                 MainActivity.getNavController().navigate(R.id.nav_country, args);
             }
         });
@@ -126,7 +126,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(RecipesFragment.ARG_COUNTRY, "italian");
+                args.putSerializable(RecipesFragment.ARG_COUNTRY, CountriesRecipe.ITALIAN);
                 MainActivity.getNavController().navigate(R.id.nav_country, args);
             }
         });
@@ -135,7 +135,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(RecipesFragment.ARG_COUNTRY, "korean");
+                args.putSerializable(RecipesFragment.ARG_COUNTRY, CountriesRecipe.KOREAN);
                 MainActivity.getNavController().navigate(R.id.nav_country, args);
             }
         });

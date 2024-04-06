@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.application.freshfoodapp.model.Product;
+import com.application.freshfoodapp.ui.kitchen.sortingstrategy.ProductSorter;
+import com.application.freshfoodapp.ui.kitchen.sortingstrategy.SortStrategy;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
