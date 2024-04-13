@@ -6,9 +6,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UPCBarcodeAPIClient {
+    private static UPCBarcodeAPIClient instance;
     private static Retrofit retrofit = null;
-
-    public static Retrofit getClient() {
+    private UPCBarcodeAPIClient(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -18,7 +18,15 @@ public class UPCBarcodeAPIClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
+    }
 
+    public static UPCBarcodeAPIClient getInstance() {
+        if(instance == null)
+            instance = new UPCBarcodeAPIClient();
+        return instance;
+    }
+
+    public static Retrofit getClient() {
         return retrofit;
     }
 }

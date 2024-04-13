@@ -12,38 +12,49 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface APIService {
-    Gson gson = new GsonBuilder()
+public class APIService implements EdamamService {
+    private static APIService instance;
+    private final EdamamService edamamService;
+    private static final Gson gson = new GsonBuilder()
             .setLenient()
             .create();
-    APIService apiService = new Retrofit.Builder()
-            .baseUrl("https://api.edamam.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(APIService.class);
 
-    @GET("api/recipes/v2")
-    Call<SearchRecipes> searchRecipes (@Query("app_id") String app_id,
-                                       @Query("app_key") String app_key,
-                                       @Query("type") String type,
-                                       @Query("health") String[] health,
-                                       @Query("q") String q);
+    private APIService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.edamam.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        edamamService = retrofit.create(EdamamService.class);
+    }
 
-    @GET("api/recipes/v2")
-    Call<SearchRecipes> searchDishes (@Query("app_id") String app_id,
-                                      @Query("app_key") String app_key,
-                                      @Query("type") String type,
-                                      @Query("q") String q);
+    public static APIService getInstance() {
+        if (instance == null) {
+            synchronized (APIService.class) {
+                if (instance == null) {
+                    instance = new APIService();
+                }
+            }
+        }
+        return instance;
+    }
 
-    @GET("api/recipes/v2/by-uri")
-    Call<SearchRecipes> loadDish (@Query("app_id") String app_id,
-                                  @Query("app_key") String app_key,
-                                  @Query("type") String type,
-                                  @Query("uri") String uri);
+    @Override
+    public Call<SearchRecipes> searchRecipes(String app_id, String app_key, String type, String[] health, String q) {
+        return edamamService.searchRecipes(app_id, app_key, type, health, q);
+    }
 
-    @GET("api/recipes/v2")
-    Call<SearchRecipes> loadDishBaseOnCountry (@Query("app_id") String app_id,
-                                               @Query("app_key") String app_key,
-                                               @Query("type") String type,
-                                               @Query("cuisineType") String cuisineType);
+    @Override
+    public Call<SearchRecipes> searchDishes(String app_id, String app_key, String type, String q) {
+        return edamamService.searchDishes(app_id, app_key, type, q);
+    }
+
+    @Override
+    public Call<SearchRecipes> loadDish(String app_id, String app_key, String type, String uri) {
+        return edamamService.loadDish(app_id, app_key, type, uri);
+    }
+
+    @Override
+    public Call<SearchRecipes> loadDishBaseOnCountry(String app_id, String app_key, String type, String cuisineType) {
+        return edamamService.loadDishBaseOnCountry(app_id, app_key, type, cuisineType);
+    }
 }

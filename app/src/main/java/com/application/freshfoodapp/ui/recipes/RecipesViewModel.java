@@ -1,8 +1,5 @@
 package com.application.freshfoodapp.ui.recipes;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -101,11 +98,13 @@ public class RecipesViewModel extends ViewModel {
                             }
 
                             if(!query.isEmpty()) {
-                                APIService.apiService.searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
+                                APIService.getInstance().searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
                                     @Override
                                     public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
-                                        mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
-                                        updateRecipes(Arrays.asList(response.body().getFoodRecipes()));
+                                        if (response != null && response.body() != null) {
+                                            mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
+                                            updateRecipes(Arrays.asList(response.body().getFoodRecipes()));
+                                        }
                                     }
                                     @Override
                                     public void onFailure(Call<SearchRecipes> call, Throwable t) {

@@ -31,7 +31,7 @@ public class CountryViewModel extends ViewModel {
     }
 
     public void prepareData(CuisineType cuisineType) {
-        APIService.apiService.loadDishBaseOnCountry(APP_ID, APP_KEY,"public", cuisineType.getCuisineType()).enqueue(new Callback<SearchRecipes>() {
+        APIService.getInstance().loadDishBaseOnCountry(APP_ID, APP_KEY,"public", cuisineType.getCuisineType()).enqueue(new Callback<SearchRecipes>() {
             @Override
             public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

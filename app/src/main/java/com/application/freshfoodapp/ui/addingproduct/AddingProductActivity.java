@@ -81,7 +81,8 @@ public class AddingProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String retrievedBarcode = intent.getStringExtra(MainActivity.REQ_BARCODE_STATE);
         if (retrievedBarcode != null) {
-            apiInterface = UPCBarcodeAPIClient.getClient().create(UPCBarcodeAPIInterface.class);
+            UPCBarcodeAPIClient apiClient = UPCBarcodeAPIClient.getInstance();
+            apiInterface = apiClient.getClient().create(UPCBarcodeAPIInterface.class);
             Call<Product> call = apiInterface.getProductInfoWithBarcode(retrievedBarcode);
             call.enqueue(new Callback<Product>() {
                 @Override

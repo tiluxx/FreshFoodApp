@@ -149,7 +149,7 @@ public class PlannerFragment extends Fragment {
             Date dateCurrent = parseFormattedDate(date);
             if (convertDateToLong(dateCurrent) == plan.getDateOfPlan()) {
                 ItemOfMeal item = new ItemOfMeal();
-                APIService.apiService.loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchRecipes>() {
+                APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchRecipes>() {
                     @Override
                     public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                         recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

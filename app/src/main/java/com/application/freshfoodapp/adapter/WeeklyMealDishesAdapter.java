@@ -48,7 +48,7 @@ public class WeeklyMealDishesAdapter extends RecyclerView.Adapter<WeeklyMealDish
         int curPosition = holder.getAdapterPosition();
         PlanForMeal planForMeal = data.get(curPosition);
 
-        APIService.apiService.loadDish(APP_ID, APP_KEY,"public", planForMeal.getDishUri()).enqueue(new Callback<SearchRecipes>() {
+        APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", planForMeal.getDishUri()).enqueue(new Callback<SearchRecipes>() {
             @Override
             public void onResponse(@NonNull Call<SearchRecipes> call, @NonNull Response<SearchRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

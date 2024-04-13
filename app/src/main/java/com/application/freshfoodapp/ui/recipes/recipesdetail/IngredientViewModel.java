@@ -26,7 +26,7 @@ public class IngredientViewModel extends ViewModel {
     }
 
     public void prepareData(String uri) {
-        APIService.apiService.loadDish(APP_ID, APP_KEY,"public", uri).enqueue(new Callback<SearchRecipes>() {
+        APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", uri).enqueue(new Callback<SearchRecipes>() {
             @Override
             public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

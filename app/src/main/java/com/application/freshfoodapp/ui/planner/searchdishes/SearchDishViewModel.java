@@ -29,7 +29,7 @@ public class SearchDishViewModel extends ViewModel {
     }
 
     public void prepareData(String dish_name) {
-        APIService.apiService.searchDishes(APP_ID, APP_KEY,"public", dish_name).enqueue(new Callback<SearchRecipes>() {
+        APIService.getInstance().searchDishes(APP_ID, APP_KEY,"public", dish_name).enqueue(new Callback<SearchRecipes>() {
             @Override
             public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));

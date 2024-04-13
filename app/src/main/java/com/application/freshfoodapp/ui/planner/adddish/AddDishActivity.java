@@ -153,8 +153,7 @@ public class AddDishActivity extends AppCompatActivity {
 
             expiryDatePickerBtn.setOnClickListener(v -> datePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
         }
-        
-        
+
         confirmAddingBtn.setOnClickListener(v -> {
             if(expiryDatePickerBtn.getText().toString() == null) {
                 Toast.makeText(this, "Please set a planning date", Toast.LENGTH_SHORT).show();
