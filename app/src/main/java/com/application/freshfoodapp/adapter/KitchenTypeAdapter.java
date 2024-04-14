@@ -23,6 +23,8 @@ import com.application.freshfoodapp.model.Product;
 import com.application.freshfoodapp.ui.kitchen.sortingstrategy.ProductSorter;
 import com.application.freshfoodapp.ui.productdetail.ProductDetailFragment;
 import com.application.freshfoodapp.ui.recipes.recipesdetail.IngredientFragment;
+import com.application.freshfoodapp.ui.sharing.kitchenproxy.KitchenService;
+import com.application.freshfoodapp.ui.sharing.kitchenproxy.SharedKitchenProxy;
 import com.application.freshfoodapp.viewholder.KitchenViewHolder;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +42,7 @@ import java.util.TimeZone;
 
 public class KitchenTypeAdapter extends RecyclerView.Adapter<KitchenViewHolder> {
     private List<Product> data = new ArrayList<>();
+    private KitchenService kitchenService = new SharedKitchenProxy();
 
     @NonNull
     @Override
@@ -69,19 +72,20 @@ public class KitchenTypeAdapter extends RecyclerView.Adapter<KitchenViewHolder> 
         }
 
         holder.getDeleteProductBtn().setOnClickListener(v -> {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("products")
-                    .document(curProduct.getProductId())
-                    .delete()
-                    .addOnSuccessListener(aVoid -> {
-                        data.remove(curProduct);
-                        notifyItemRemoved(curPosition);
-                        Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        Log.w("ERROR", "Error deleting document", e);
-                    });
+            kitchenService.removeProductItem(v.getContext(), curProduct, data, this, curPosition);
+//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//            db.collection("products")
+//                    .document(curProduct.getProductId())
+//                    .delete()
+//                    .addOnSuccessListener(aVoid -> {
+//                        data.remove(curProduct);
+//                        notifyItemRemoved(curPosition);
+//                        Toast.makeText(v.getContext(), "Delete product successfully", Toast.LENGTH_SHORT).show();
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+//                        Log.w("ERROR", "Error deleting document", e);
+//                    });
         });
 
         holder.getItemView().setOnClickListener(v -> {

@@ -3,9 +3,9 @@ package com.application.freshfoodapp.ui.planner.searchdishes;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.application.freshfoodapp.api.APIService;
+import com.application.freshfoodapp.api.EdamamAPIService;
 import com.application.freshfoodapp.model.RootObjectModel;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.SearchEdamamRecipes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,14 +29,14 @@ public class SearchDishViewModel extends ViewModel {
     }
 
     public void prepareData(String dish_name) {
-        APIService.getInstance().searchDishes(APP_ID, APP_KEY,"public", dish_name).enqueue(new Callback<SearchRecipes>() {
+        EdamamAPIService.getInstance().searchDishes(APP_ID, APP_KEY,"public", dish_name).enqueue(new Callback<SearchEdamamRecipes>() {
             @Override
-            public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
+            public void onResponse(Call<SearchEdamamRecipes> call, Response<SearchEdamamRecipes> response) {
                 recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));
                 mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
             }
             @Override
-            public void onFailure(Call<SearchRecipes> call, Throwable t) {
+            public void onFailure(Call<SearchEdamamRecipes> call, Throwable t) {
                 mRecipes.postValue(null);
             }
         });

@@ -3,7 +3,7 @@ package com.application.freshfoodapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchRecipes {
+public class SearchEdamamRecipes {
     @SerializedName("q")
     private String query;
     @SerializedName("hits")

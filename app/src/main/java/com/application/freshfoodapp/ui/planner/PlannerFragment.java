@@ -1,8 +1,5 @@
 package com.application.freshfoodapp.ui.planner;
 
-import static com.application.freshfoodapp.MainActivity.formatDate;
-
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
@@ -24,26 +21,14 @@ import android.widget.Toast;
 import com.application.freshfoodapp.MainActivity;
 import com.application.freshfoodapp.R;
 import com.application.freshfoodapp.adapter.DishAdapter;
-import com.application.freshfoodapp.adapter.IngredientAdapter;
-import com.application.freshfoodapp.adapter.RecipesAdapter;
-import com.application.freshfoodapp.api.APIService;
-import com.application.freshfoodapp.databinding.AddDishItemCardBinding;
+import com.application.freshfoodapp.api.EdamamAPIService;
 import com.application.freshfoodapp.databinding.FragmentPlannerBinding;
-import com.application.freshfoodapp.databinding.FragmentProfileBinding;
-import com.application.freshfoodapp.databinding.FragmentRecipesBinding;
-import com.application.freshfoodapp.databinding.FragmentSearchDishBinding;
 import com.application.freshfoodapp.model.ItemOfMeal;
 import com.application.freshfoodapp.model.PlanForMeal;
-import com.application.freshfoodapp.model.Restriction;
 import com.application.freshfoodapp.model.RootObjectModel;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.SearchEdamamRecipes;
 import com.application.freshfoodapp.ui.planner.searchdishes.SearchDishFragment;
 import com.application.freshfoodapp.ui.planner.weeklyplanner.WeeklyPlannerFragment;
-import com.application.freshfoodapp.ui.recipes.RecipesFragment;
-import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -149,9 +134,9 @@ public class PlannerFragment extends Fragment {
             Date dateCurrent = parseFormattedDate(date);
             if (convertDateToLong(dateCurrent) == plan.getDateOfPlan()) {
                 ItemOfMeal item = new ItemOfMeal();
-                APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchRecipes>() {
+                EdamamAPIService.getInstance().loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchEdamamRecipes>() {
                     @Override
-                    public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
+                    public void onResponse(Call<SearchEdamamRecipes> call, Response<SearchEdamamRecipes> response) {
                         recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));
                         if (plan.getTypeOfMeal().equals("breakfast")) {
                             item.setLabelDish(recipe.get(0).getRecipeModel().getLabel());
@@ -193,7 +178,7 @@ public class PlannerFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<SearchRecipes> call, Throwable t) {
+                    public void onFailure(Call<SearchEdamamRecipes> call, Throwable t) {
                         Toast.makeText(getContext(), "Upload failure", Toast.LENGTH_SHORT).show();
                     }
                 });

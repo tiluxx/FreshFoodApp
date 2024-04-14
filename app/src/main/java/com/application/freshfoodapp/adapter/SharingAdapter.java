@@ -20,6 +20,8 @@ import com.application.freshfoodapp.model.Kitchen;
 import com.application.freshfoodapp.ui.auth.AuthActivity;
 import com.application.freshfoodapp.ui.kitchen.KitchenFragment;
 import com.application.freshfoodapp.ui.sharing.SharedKitchen.SharedKitchenFragment;
+import com.application.freshfoodapp.ui.sharing.kitchenproxy.KitchenService;
+import com.application.freshfoodapp.ui.sharing.kitchenproxy.SharedKitchenProxy;
 import com.application.freshfoodapp.viewholder.SharingViewHolder;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ import java.util.List;
 
 public class SharingAdapter extends RecyclerView.Adapter<SharingViewHolder> {
     private List<Kitchen> data = new ArrayList<>();
+    private KitchenService kitchenService = new SharedKitchenProxy();
 
     @NonNull
     @Override
@@ -56,9 +59,10 @@ public class SharingAdapter extends RecyclerView.Adapter<SharingViewHolder> {
         holder.getNumOfMemberTextView().setText(numOfMembersTv);
 
         holder.getItemView().setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putString(SharedKitchenFragment.ARG_SHARED_KITCHEN, kitchen.getKitchenId());
-            MainActivity.getNavController().navigate(R.id.nav_shared_kitchen, args);
+            kitchenService.accessKitchen(v.getContext(), kitchen.getKitchenId());
+//            Bundle args = new Bundle();
+//            args.putString(SharedKitchenFragment.ARG_SHARED_KITCHEN, kitchen.getKitchenId());
+//            MainActivity.getNavController().navigate(R.id.nav_shared_kitchen, args);
         });
 
         MaterialAlertDialogBuilder leaveKitchenConfirmDialog = new MaterialAlertDialogBuilder(holder.getItemView().getContext())

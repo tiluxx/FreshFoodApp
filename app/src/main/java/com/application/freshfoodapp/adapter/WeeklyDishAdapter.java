@@ -3,18 +3,16 @@ package com.application.freshfoodapp.adapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.application.freshfoodapp.api.APIService;
+import com.application.freshfoodapp.api.EdamamAPIService;
 import com.application.freshfoodapp.databinding.MealCardListItemBinding;
 import com.application.freshfoodapp.model.ItemOfMeal;
 import com.application.freshfoodapp.model.PlanForMeal;
 import com.application.freshfoodapp.model.RootObjectModel;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.SearchEdamamRecipes;
 import com.application.freshfoodapp.model.WeeklyDish;
 import com.application.freshfoodapp.viewholder.WeeklyDishViewHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,9 +55,9 @@ public class WeeklyDishAdapter extends RecyclerView.Adapter<WeeklyDishViewHolder
         List<PlanForMeal> plans = weeklyDish.getDishesInDayOfWeek();
         List<ItemOfMeal> itemOfMeals = new ArrayList<>();
         for (PlanForMeal plan : plans) {
-            APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchRecipes>() {
+            EdamamAPIService.getInstance().loadDish(APP_ID, APP_KEY,"public", plan.getDishUri()).enqueue(new Callback<SearchEdamamRecipes>() {
                 @Override
-                public void onResponse(@NonNull Call<SearchRecipes> call, @NonNull Response<SearchRecipes> response) {
+                public void onResponse(@NonNull Call<SearchEdamamRecipes> call, @NonNull Response<SearchEdamamRecipes> response) {
                     recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));
                     itemOfMeals.add(new ItemOfMeal(
                             plan.getDishUri(),
@@ -71,7 +69,7 @@ public class WeeklyDishAdapter extends RecyclerView.Adapter<WeeklyDishViewHolder
                 }
 
                 @Override
-                public void onFailure(Call<SearchRecipes> call, Throwable t) {
+                public void onFailure(Call<SearchEdamamRecipes> call, Throwable t) {
 
                 }
             });

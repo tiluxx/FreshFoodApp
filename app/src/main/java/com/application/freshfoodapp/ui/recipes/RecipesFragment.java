@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.application.freshfoodapp.MainActivity;
@@ -21,16 +20,10 @@ import com.application.freshfoodapp.databinding.FragmentRecipesBinding;
 import com.application.freshfoodapp.model.RootObjectModel;
 
 
-import com.application.freshfoodapp.model.SearchRecipes;
 import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-
-import com.application.freshfoodapp.utils.GridSpacingItemDecoration;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.List;

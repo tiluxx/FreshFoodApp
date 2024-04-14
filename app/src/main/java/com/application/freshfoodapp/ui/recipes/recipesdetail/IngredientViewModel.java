@@ -2,9 +2,16 @@ package com.application.freshfoodapp.ui.recipes.recipesdetail;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.application.freshfoodapp.api.APIService;
+import com.application.freshfoodapp.api.EdamamAPIService;
+import com.application.freshfoodapp.api.SpoonacularAPIService;
+import com.application.freshfoodapp.model.Ingredient;
+import com.application.freshfoodapp.model.MissedIngredient;
+import com.application.freshfoodapp.model.RecipeModel;
 import com.application.freshfoodapp.model.RootObjectModel;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.SearchEdamamRecipes;
+import com.application.freshfoodapp.model.SearchSpoonacularRecipes;
+import com.application.freshfoodapp.model.UsedIngredients;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,17 +32,57 @@ public class IngredientViewModel extends ViewModel {
         return mRecipes;
     }
 
-    public void prepareData(String uri) {
-        APIService.getInstance().loadDish(APP_ID, APP_KEY,"public", uri).enqueue(new Callback<SearchRecipes>() {
-            @Override
-            public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
-                recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));
-                mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
-            }
-            @Override
-            public void onFailure(Call<SearchRecipes> call, Throwable t) {
-                mRecipes.postValue(null);
-            }
-        });
+    public void prepareData(String keyToRecipe) {
+        if (keyToRecipe.contains("spoonacular")) {
+            SpoonacularAPIService.getInstance().getRecipe(keyToRecipe).enqueue(new Callback<SearchSpoonacularRecipes>() {
+                @Override
+                public void onResponse(Call<SearchSpoonacularRecipes> call, Response<SearchSpoonacularRecipes> response) {
+                    if (response.body() != null) {
+                        recipe = new ArrayList<>();
+
+                        SearchSpoonacularRecipes resRecipe = response.body();
+                        String uri = "https://api.spoonacular.com/recipes/"+ resRecipe.getId() + "/information?includeNutrition=false&apiKey=b3710752c9de4189a3cc93f38c4bfc65";
+                        String label = resRecipe.getTitle();
+                        String image = resRecipe.getImage();
+                        String calories = "0.0";
+                        String totalTime = "0.0";
+                        String[] cuisineType = new String[]{};
+                        String[] mealType = new String[]{};
+                        String[] dishType = new String[]{};
+                        String[] healthLabels = new String[]{};
+                        List<Ingredient> ingredientsOfRecipe = new ArrayList<>();
+                        for (MissedIngredient ingr : resRecipe.getMissedIngredients()){
+                            ingredientsOfRecipe.add(new Ingredient(String.valueOf(ingr.getAmount()), ingr.getUnit(), ingr.getName(), "0.0", ingr.getAisle()));
+                        }
+                        for (UsedIngredients ingr : resRecipe.getUsedIngredients()){
+                            ingredientsOfRecipe.add(new Ingredient(String.valueOf(ingr.getAmount()), ingr.getUnit(), ingr.getName(), "0.0", ingr.getAisle()));
+                        }
+                        Ingredient[] ingrArray = new Ingredient[ingredientsOfRecipe.size()];
+                        ingredientsOfRecipe.toArray(ingrArray);
+                        RecipeModel recipeModel = new RecipeModel(uri, label, image, calories, totalTime, cuisineType, mealType, dishType, healthLabels, ingrArray);
+                        recipe.add(new RootObjectModel(recipeModel));
+
+                        mRecipes.postValue(recipe);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SearchSpoonacularRecipes> call, Throwable t) {
+                    mRecipes.postValue(null);
+                }
+            });
+        } else {
+            EdamamAPIService.getInstance().loadDish(APP_ID, APP_KEY,"public", keyToRecipe).enqueue(new Callback<SearchEdamamRecipes>() {
+                @Override
+                public void onResponse(Call<SearchEdamamRecipes> call, Response<SearchEdamamRecipes> response) {
+                    recipe = new ArrayList<>(Arrays.asList(response.body().getFoodRecipes()));
+                    mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
+                }
+                @Override
+                public void onFailure(Call<SearchEdamamRecipes> call, Throwable t) {
+                    mRecipes.postValue(null);
+                }
+            });
+        }
     }
 }

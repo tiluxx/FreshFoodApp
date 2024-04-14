@@ -1,14 +1,20 @@
 package com.application.freshfoodapp.ui.recipes;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.application.freshfoodapp.MainActivity;
-import com.application.freshfoodapp.api.APIService;
+import com.application.freshfoodapp.api.EdamamAPIService;
+import com.application.freshfoodapp.api.EdamamRecipeService;
+import com.application.freshfoodapp.api.RecipeServiceProvider;
+import com.application.freshfoodapp.api.SpoonacularServiceAdapter;
 import com.application.freshfoodapp.model.Product;
 import com.application.freshfoodapp.model.Restriction;
 import com.application.freshfoodapp.model.RootObjectModel;
-import com.application.freshfoodapp.model.SearchRecipes;
+import com.application.freshfoodapp.model.SearchEdamamRecipes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +34,7 @@ public class RecipesViewModel extends ViewModel {
     private static final String APP_ID = "fa0eb92f";
     private static final String APP_KEY = "f49ace5bca4a053d1b877b4d369a673a";
     private MutableLiveData<List<RootObjectModel>> mRecipes;
+    private RecipeServiceProvider recipeServiceProvider;
     private List<String> restrictions;
     private static FirebaseUser curUser;
     private String query = "";
@@ -98,19 +105,27 @@ public class RecipesViewModel extends ViewModel {
                             }
 
                             if(!query.isEmpty()) {
-                                APIService.getInstance().searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchRecipes>() {
-                                    @Override
-                                    public void onResponse(Call<SearchRecipes> call, Response<SearchRecipes> response) {
-                                        if (response != null && response.body() != null) {
-                                            mRecipes.postValue(Arrays.asList(response.body().getFoodRecipes()));
-                                            updateRecipes(Arrays.asList(response.body().getFoodRecipes()));
-                                        }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<SearchRecipes> call, Throwable t) {
-                                        mRecipes.postValue(null);
-                                    }
-                                });
+                                List<RootObjectModel> recipesList = new ArrayList<>();
+//                                EdamamAPIService.getInstance().searchRecipes(APP_ID, APP_KEY,"public", healthyLabels, query).enqueue(new Callback<SearchEdamamRecipes>() {
+//                                    @Override
+//                                    public void onResponse(@NonNull Call<SearchEdamamRecipes> call, @NonNull Response<SearchEdamamRecipes> response) {
+//                                        if (response.body() != null) {
+//                                            recipesList.addAll(Arrays.asList(response.body().getFoodRecipes()));
+//                                        }
+//                                    }
+//                                    @Override
+//                                    public void onFailure(@NonNull Call<SearchEdamamRecipes> call, @NonNull Throwable t) {
+//                                        mRecipes.postValue(null);
+//                                    }
+//                                });
+
+                                // Existing API service
+                                recipeServiceProvider = new EdamamRecipeService();
+                                recipeServiceProvider.fetchRecipes(this, query, healthyLabels);
+
+                                // New API service with different JSON format
+                                recipeServiceProvider = new SpoonacularServiceAdapter();
+                                recipeServiceProvider.fetchRecipes(this, query);
                             } else {
                                 mRecipes.postValue(null);
                             }
